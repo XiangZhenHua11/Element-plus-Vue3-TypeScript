@@ -1,0 +1,65 @@
+{
+  "id": "2059694",
+  "name": "element-iconfont",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10281814",
+      "name": "账号",
+      "font_class": "account",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "11491739",
+      "name": "密码",
+      "font_class": "password",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "2959039",
+      "name": "角色管理",
+      "font_class": "role",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "3283486",
+      "name": "角色设置",
+      "font_class": "users",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "456960",
+      "name": "主页",
+      "font_class": "homePage",
+      "unicode": "e6b6",
+      "unicode_decimal": 59062
+    },
+    {
+      "icon_id": "11799093",
+      "name": "系统日志",
+      "font_class": "systemLog",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "12975229",
+      "name": "控制台",
+      "font_class": "console",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "14303365",
+      "name": "系统功能",
+      "font_class": "systemFunction",
+      "unicode": "e74d",
+      "unicode_decimal": 59213
+    }
+  ]
+}
