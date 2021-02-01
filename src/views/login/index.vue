@@ -4,6 +4,7 @@
       ref="loginFormRef"
       class="login-form"
       :model="loginForm"
+      :rules="loginRules"
       label-position="left"
     >
       <div class="title-container">
@@ -41,7 +42,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, toRefs } from "vue";
+import { defineComponent, ref, reactive } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 export default defineComponent({
@@ -51,26 +52,30 @@ export default defineComponent({
     const store = useStore();
     const loading = ref<boolean>(false);
     const loginFormRef = ref<HTMLElement | null>(null);
-    const loginForm = {
+    const loginForm = reactive({
       username: "system",
       password: "wwww",
-    };
-    const loginRules = {
-      username: [{ required: true, message: "请输入账号", trigger: "blur" }],
+    });
+    const loginRules = reactive({
+      username: [{ required: true, message: "请输入账号", trigger: "change" }],
       password: [
-        { required: true, message: "请输入密码", trigger: "blur" },
-        { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+        { required: true, message: "请输入密码", trigger: "change" },
+        { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "change" },
       ],
-    };
+    });
     const loginOn = (): void => {
       (loginFormRef.value as any).validate(async (valid: boolean) => {
         if (valid) {
-          const submitResult = await store.dispatch("user/login", loginForm);
-          console.log(submitResult);
-          // router.push({
-          //   path: this.redirect || "/",
-          //   query: this.otherQuery,
-          // });
+          try {
+            loading.value = true;
+            const submitResult = await store.dispatch("user/login", loginForm);
+            // router.push({
+            //   path: this.redirect || "/",
+            //   query: this.otherQuery,
+            // });
+          } finally {
+            loading.value = false;
+          }
         }
       });
     };
@@ -82,7 +87,6 @@ export default defineComponent({
       loginOn,
     };
   },
-  components: {},
 });
 </script>
 <style lang="scss">
