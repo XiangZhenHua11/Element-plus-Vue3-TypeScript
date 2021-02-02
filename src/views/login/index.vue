@@ -42,37 +42,38 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
-import { useStore } from "vuex";
+import { defineComponent, ref, reactive, watch } from "vue";
+import store from "@/store";
 import { useRouter } from "vue-router";
 export default defineComponent({
   name: "login",
   setup() {
-    const router = useRouter();
-    const store = useStore();
-    const loading = ref<boolean>(false);
-    const loginFormRef = ref<HTMLElement | null>(null);
-    const loginForm = reactive({
+    let router = useRouter();
+    let loading = ref<boolean>(false);
+    let rectding = ref<string>("");
+    let otherQuery = ref<any>({});
+    let loginFormRef = ref<HTMLElement | null>(null);
+    let loginForm = reactive({
       username: "system",
       password: "wwww",
     });
-    const loginRules = reactive({
+    let loginRules = reactive({
       username: [{ required: true, message: "请输入账号", trigger: "change" }],
       password: [
         { required: true, message: "请输入密码", trigger: "change" },
         { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "change" },
       ],
     });
-    const loginOn = (): void => {
+    let loginOn = (): void => {
       (loginFormRef.value as any).validate(async (valid: boolean) => {
         if (valid) {
           try {
             loading.value = true;
-            const submitResult = await store.dispatch("user/login", loginForm);
-            // router.push({
-            //   path: this.redirect || "/",
-            //   query: this.otherQuery,
-            // });
+            let submitResult = await store.dispatch("user/login", loginForm);
+            router.push({
+              path: rectding.value || "/",
+              query: otherQuery.value,
+            });
           } finally {
             loading.value = false;
           }

@@ -8,6 +8,6 @@ export const setSidebarStatus = (sidebarStatus: string) =>
 
 // User
 const tokenKey = "element-plus-vue3-typescript_token";
-export const getToken = () => Cookies.get(tokenKey);
+export const getToken = () => Cookies.get(tokenKey) || "";
 export const setToken = (token: string) => Cookies.set(tokenKey, token);
 export const removeToken = () => Cookies.remove(tokenKey);

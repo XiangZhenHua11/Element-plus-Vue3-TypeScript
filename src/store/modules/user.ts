@@ -18,13 +18,13 @@ interface state {
 const state = getDefaultState();
 
 const mutations = {
-  SET_TOKEN: (token: string) => {
+  SET_TOKEN: (state: state, token: string) => {
     state.token = token;
   },
-  SET_HEADIMG: (headImg: string) => {
+  SET_HEADIMG: (state: state, headImg: string) => {
     state.headImg = headImg;
   },
-  SET_NAME: (name: string) => {
+  SET_NAME: (state: state, name: string) => {
     state.name = name;
   },
   RESET_STATE: (state: state) => {
@@ -49,7 +49,7 @@ const actions = {
     const { data } = await getUserInfo(state.token);
     const { userName, headImg } = data;
     commit("SET_NAME", userName); // 用户名
-    commit("SET_AVATAR", headImg); // 头像地址
+    commit("SET_HEADIMG", headImg); // 头像地址
     return Promise.resolve(data);
   },
 

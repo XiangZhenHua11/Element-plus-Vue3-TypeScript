@@ -3,6 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+//路由守卫
+import "@/router/permission";
+
 //引用样式
 import "@/styles/index.css";
 
