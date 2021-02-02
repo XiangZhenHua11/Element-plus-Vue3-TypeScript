@@ -13,6 +13,10 @@ const routers = useRouter();
 router.beforeEach(async (to: any, _: any, next: any) => {
   // Start progress bar
   NProgress.start();
+
+  // set page title
+  document.title = to.meta.title;
+
   // Determine whether the user has logged in
   if (store.getters.token) {
     if (to.path === "/login") {
@@ -49,7 +53,7 @@ router.beforeEach(async (to: any, _: any, next: any) => {
     }
   } else {
     // Has no token
-    if (whiteList.indexOf(to.path) !== -1) {
+    if (whiteList.includes(to.path)) {
       // In the free login whitelist, go directly
       next();
     } else {
