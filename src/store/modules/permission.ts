@@ -49,12 +49,12 @@ const generaMenu = (data: any) => {
           item.liDataName[0].toLowerCase()
         ), //首字母替换换成小写,
       component: Layout,
-      guid: item.guid, // 父节点唯一标识
+      // guid: item.guid, // 父节点唯一标识
       name: item.liDataName,
       children: [],
       meta: {
         title: item.liName,
-        id: item.id,
+        id: item.guid,
         roles: ["system"],
         icon: item.liIcon,
       },
@@ -72,14 +72,14 @@ const generaMenu = (data: any) => {
       .path;
 
   // 404 page must be placed at the end !!!
-  menuArr.push({ path: "*", redirect: "/404", hidden: true });
+  // menuArr.push({ path: "*", redirect: "/404", meta: { hidden: true }});
   return menuArr;
 };
 
 // 获取菜单子节点数据
 function joinChildMemu(menu: routerMenu_Inf, data: Array<any>) {
   const rootMenu = data.filter(
-    (x: resData_Inf) => x.parentGuid === menu.guid && x.isEnable === true
+    (x: resData_Inf) => x.parentGuid === menu.meta.id && x.isEnable === true
   );
   const childMenuArr: Array<routerMenu_Inf> = [];
   rootMenu.forEach((item: resData_Inf) => {
@@ -93,12 +93,12 @@ function joinChildMemu(menu: routerMenu_Inf, data: Array<any>) {
       component: item.isChild
         ? Layout
         : () => import(`@/views/${item.element_liHref}`),
-      guid: item.guid, // 父节点唯一标识
+      // guid: item.guid, // 父节点唯一标识
       name: item.liDataName,
       children: [],
       meta: {
         title: item.liName,
-        id: item.id,
+        id: item.guid,
         roles: ["system"],
         icon: item.liIcon,
         affix:
@@ -141,6 +141,7 @@ const actions = {
 };
 export default {
   namespaced: true,
+  state,
   mutations,
   actions,
 };

@@ -2,21 +2,17 @@ import router from "@/router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { ElMessage } from "element-plus";
-import { useRouter } from "vue-router";
 import store from "@/store";
+import { RouteRecordRaw } from "vue-router";
 
 NProgress.configure({ showSpinner: false });
 
 const whiteList = ["/login"];
-const routers = useRouter();
 
 router.beforeEach(async (to: any, _: any, next: any) => {
   // Start progress bar
   NProgress.start();
-
-  // set page title
-  document.title = to.meta.title;
-
+  
   // Determine whether the user has logged in
   if (store.getters.token) {
     if (to.path === "/login") {
@@ -37,9 +33,10 @@ router.beforeEach(async (to: any, _: any, next: any) => {
             "permission/generateRoutes",
             account
           );
-          // 动态添加可访问路由
-          router.addRoute(accessRoutes);
-
+          accessRoutes.forEach((item: RouteRecordRaw) => {
+            // 动态添加可访问路由
+            router.addRoute(item);
+          });
           // 设置replace:true，这样导航就不会留下历史记录
           next({ ...to, replace: true });
         } catch (error) {
