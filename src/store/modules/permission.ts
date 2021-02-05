@@ -5,6 +5,7 @@ import Layout from "@/layout/index.vue";
 interface state {
   routes: Array<any>;
   addRoutes: Array<any>;
+  sidmenuArr: Array<resData_Inf>;
 }
 //返回数据类型接口
 interface resData_Inf {
@@ -121,12 +122,18 @@ function joinChildMemu(menu: routerMenu_Inf, data: Array<any>) {
 const state: state = {
   routes: [],
   addRoutes: [],
+  sidmenuArr: [],
 };
 
 const mutations = {
+  //设置路由
   SET_ROUTES: (state: state, routes: Array<any>) => {
     state.addRoutes = routes;
     state.routes = router.getRoutes().concat(routes);
+  },
+  //设置菜单
+  SET_SIDEMENU: (state: state, sidmenuArr: Array<resData_Inf>) => {
+    state.sidmenuArr = sidmenuArr;
   },
 };
 const actions = {
@@ -136,6 +143,7 @@ const actions = {
     // 获取格式化后菜单数据
     var routMenu = generaMenu(data);
     commit("SET_ROUTES", routMenu);
+    commit("SET_SIDEMENU", routMenu);
     return Promise.resolve(routMenu);
   },
 };

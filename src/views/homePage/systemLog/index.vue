@@ -1,5 +1,5 @@
 <template>
-  <div>123</div>
+  <div>systemLog</div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
