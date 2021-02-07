@@ -33,7 +33,6 @@ export default defineComponent({
           ];
           matched = homePageArr.concat(matched);
         }
-        console.log(matched);
         return matched;
       }
     );
