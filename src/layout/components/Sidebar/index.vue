@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
-    <el-menu default-active="2" :router="true">
+    <el-menu :default-active="activeMenu" :router="true">
       <el-submenu
         v-for="rootMenu in sidmenuArr"
         :key="rootMenu.path"
@@ -34,26 +34,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, ref, reactive, computed } from "vue";
 import store from "@/store";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "SideBar",
   setup() {
+    let router = useRouter();
     //获取缓存菜单
     let sidmenuArr = reactive(store.getters.sidmenuArr);
-    // let activeMenu = (): void => {
-    //   // const route = this.$route;
-    //   // const { meta, path } = route;
-    //   // if (meta.activeMenu) {
-    //   //   return meta.activeMenu;
-    //   // }
-    //   // return path;
-    // };
+    //获取路由设置默认选择菜单
+    let activeMenu = computed((): string => {
+      const { meta, path } = router.currentRoute.value;
+      if (!!meta.activeMenu) {
+        return meta.activeMenu;
+      }
+      return path;
+    });
     // let isCollapse = (): void => {
     //   // return !this.sidebar.opened;
     // };
     return {
       sidmenuArr,
+      activeMenu,
     };
   },
 });

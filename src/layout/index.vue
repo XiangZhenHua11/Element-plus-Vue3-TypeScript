@@ -8,7 +8,7 @@
     <div class="main-box flex">
       <sidebar class="sidebar-container" />
       <div class="main-container">
-        <!-- <navbar /> -->
+        <navbar />
         <app-main />
       </div>
     </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { AppMain, Sidebar } from "./components";
+import { AppMain, Sidebar, Navbar } from "./components";
 import { defineComponent, ref, reactive } from "vue";
 export default defineComponent({
   name: "Layout",
@@ -26,6 +26,7 @@ export default defineComponent({
   components: {
     Sidebar,
     AppMain,
+    Navbar,
   },
 });
 </script>
