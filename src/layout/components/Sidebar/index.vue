@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
-    <el-menu :default-active="activeMenu" :router="true">
+    <el-menu :default-active="activeMenu" :collapse="isCollapse" :router="true">
       <el-submenu
         v-for="rootMenu in sidmenuArr"
         :key="rootMenu.path"
@@ -51,11 +51,12 @@ export default defineComponent({
       }
       return path;
     });
-    // let isCollapse = (): void => {
-    //   // return !this.sidebar.opened;
-    // };
+    let isCollapse = computed((): boolean => {
+      return !store.getters.sidebar.opened;
+    });
     return {
       sidmenuArr,
+      isCollapse,
       activeMenu,
     };
   },

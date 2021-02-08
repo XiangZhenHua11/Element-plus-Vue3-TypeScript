@@ -1,35 +1,34 @@
-/*
- * @Author: your name
- * @Date: 2020-12-15 11:01:46
- * @LastEditTime: 2020-12-17 11:45:46
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \vehicle-mp\src\store\modules\app.ts
- */
-import { tagsProps, stateProps } from '../storeTypeProps'
-const sessionTags = window.sessionStorage.getItem('tags')
+import Cookies from "js-cookie";
+
+interface app_Inf {
+  sidebar: sidebar_Inf;
+}
+//菜单接口
+interface sidebar_Inf {
+  opened: boolean;
+}
+const state: app_Inf = {
+  sidebar: {
+    opened: !!eval(<string>Cookies.get("sidebarStatus")) ? true : false,
+  },
+};
+const mutations = {
+  //设置菜单收起/展开状态
+  TOGGLE_SIDEBAR: (state: app_Inf) => {
+    state.sidebar.opened = !state.sidebar.opened;
+    Cookies.set("sidebarStatus", !!state.sidebar.opened ? "true" : "false");
+  },
+};
+const actions = {
+  //切换菜单展开/收起状态
+  toggleSideBar: ({ commit }: any) => {
+    commit("TOGGLE_SIDEBAR");
+  },
+};
 
 export default {
   namespaced: true,
-  state: {
-    isOpen: true,
-    tags: sessionTags ? [...JSON.parse(sessionTags)] : [{ title: '首页', path: '/' }]
-  },
-  mutations: {
-    SET_OPEN (state: stateProps) {
-      state.isOpen = !state.isOpen
-    },
-    PUSH_TAG (state: stateProps, tag: tagsProps) {
-      const isTag = state.tags.findIndex((t: tagsProps) => t.path === tag.path) > -1
-      if (isTag || tag.path === '/home') return
-      state.tags.push(tag)
-      window.sessionStorage.setItem('tags', JSON.stringify(state.tags))
-    },
-    DELETE_TAG (state: stateProps, tag: tagsProps) {
-      const dTagIndex = state.tags.findIndex((t: tagsProps) => t.path === tag.path)
-      if (dTagIndex > -1) state.tags.splice(dTagIndex, 1)
-    }
-  },
-  actions: {
-  }
-}
+  state,
+  mutations,
+  actions,
+};

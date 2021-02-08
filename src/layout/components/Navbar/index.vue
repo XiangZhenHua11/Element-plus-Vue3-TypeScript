@@ -5,6 +5,9 @@
       class="hamburger-container"
       @toggleClick="toggleSideBar"
     /> -->
+    <span class="hamburger-container" @click="toggleSideBar">
+      <i class="iconfont icon-menuOpen"></i>
+    </span>
     <!-- 面包屑 -->
     <breadcrumb class="breadcrumb-container" />
 
@@ -12,7 +15,6 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- 头像地址 -->
-          <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" /> -->
           <img
             :src="
               'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80'
@@ -22,22 +24,7 @@
 
           <i class="el-icon-caret-bottom" />
         </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>Home</el-dropdown-item>
-          </router-link>
-          <a
-            target="_blank"
-            href="https://github.com/PanJiaChen/vue-admin-template/"
-          >
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a
-            target="_blank"
-            href="https://panjiachen.github.io/vue-element-admin-site/#/"
-          >
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
+        <el-dropdown-menu class="user-dropdown">
           <el-dropdown-item divided @click="logout">
             <span style="display: block">Log Out</span>
           </el-dropdown-item>
@@ -47,23 +34,27 @@
   </div>
 </template>
 <script lang="ts">
-import { mapGetters } from "vuex";
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
-import Breadcrumb from "@/components/Breadcrumb";
+import Breadcrumb from "@/components/Breadcrumb/index.vue";
 export default defineComponent({
   name: "console",
   components: { Breadcrumb },
   setup() {
     let router = useRouter();
+    //退出登录
     let logout = async () => {
       await store.dispatch("user/logout");
       router.push(`/login?redirect=${router.currentRoute.value.fullPath}`);
     };
-
+    //切换菜单收起/展开状态
+    let toggleSideBar = () => {
+      store.dispatch("app/toggleSideBar");
+    };
     return {
       logout,
+      toggleSideBar,
     };
   },
 });
@@ -84,6 +75,7 @@ export default defineComponent({
     cursor: pointer;
     transition: background 0.3s;
     -webkit-tap-highlight-color: transparent;
+    padding: 0px 15px;
 
     &:hover {
       background: rgba(0, 0, 0, 0.025);

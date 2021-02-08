@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11556685",
+      "name": "菜单收起",
+      "font_class": "menuClose",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "11556695",
+      "name": "菜单展开",
+      "font_class": "menuOpen",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
       "icon_id": "10281814",
       "name": "账号",
       "font_class": "account",
