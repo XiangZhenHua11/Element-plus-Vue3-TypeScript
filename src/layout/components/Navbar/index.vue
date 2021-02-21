@@ -1,34 +1,28 @@
 <template>
   <div class="navbar">
-    <!-- <hamburger
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    /> -->
+    <!-- 收缩/展开 -->
     <span class="hamburger-container" @click="toggleSideBar">
       <i class="iconfont icon-menuOpen"></i>
     </span>
+
     <!-- 面包屑 -->
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <!-- 头像地址 -->
-          <img
-            :src="
-              'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80'
-            "
-            class="user-avatar"
-          />
-
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu class="user-dropdown">
-          <el-dropdown-item divided @click="logout">
-            <span style="display: block">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
+      <el-dropdown>
+        <el-avatar
+          :size="45"
+          :src="
+            'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80'
+          "
+        ></el-avatar>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item divided @click="logout">
+              <span style="display: block">Log Out</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
     </div>
   </div>
@@ -109,30 +103,6 @@ export default defineComponent({
 
         &:hover {
           background: rgba(0, 0, 0, 0.025);
-        }
-      }
-    }
-
-    .avatar-container {
-      margin-right: 30px;
-
-      .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
-
-        .user-avatar {
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
         }
       }
     }

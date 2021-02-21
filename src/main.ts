@@ -6,8 +6,8 @@ import store from "./store";
 //路由守卫
 import "@/router/permission";
 
-//引用样式
-import "@/styles/index.css";
+//全局css
+import "@/styles/index.scss";
 
 // iconfont 图标样式库
 import "@/assets/iconfont/iconfont.css";

@@ -42,7 +42,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, ref, reactive, watch } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
 export default defineComponent({
@@ -64,6 +64,27 @@ export default defineComponent({
         { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "change" },
       ],
     });
+    //获取路由其他参数
+    let getOtherQuery = (query: any): any => {
+      return Object.keys(query).reduce((acc, cur) => {
+        if (cur !== "redirect") {
+          acc[cur] = query[cur];
+        }
+        return acc;
+      }, {} as any);
+    };
+    //监听路由,记录路径
+    watch(
+      () => router,
+      (route) => {
+        let query = route.currentRoute.value.query;
+        redirect.value = <string>query.redirect;
+        otherQuery.value = getOtherQuery(query);
+      },
+      {
+        immediate: true,
+      }
+    );
     let loginOn = (): void => {
       (loginFormRef.value as any).validate(async (valid: boolean) => {
         if (valid) {
@@ -71,7 +92,7 @@ export default defineComponent({
             loading.value = true;
             await store.dispatch("user/login", loginForm);
             router.push({
-              path: redirect.value || "/homePage/console",
+              path: redirect.value || "/",
               query: otherQuery.value,
             });
           } finally {
