@@ -12,7 +12,7 @@ const whiteList = ["/login"];
 router.beforeEach(async (to: any, _: any, next: any) => {
   // Start progress bar
   NProgress.start();
-  
+
   // Determine whether the user has logged in
   if (store.getters.token) {
     if (to.path === "/login") {

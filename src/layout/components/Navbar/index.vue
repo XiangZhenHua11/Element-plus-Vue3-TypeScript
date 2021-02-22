@@ -28,7 +28,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
 import Breadcrumb from "@/components/Breadcrumb/index.vue";

@@ -3,7 +3,7 @@
     <el-menu :default-active="activeMenu" :collapse="isCollapse" :router="true">
       <el-submenu
         v-for="rootMenu in sidmenuArr"
-        :key="rootMenu.path"
+        :key="rootMenu.meta.title"
         :index="rootMenu.path"
       >
         <template #title>
@@ -16,7 +16,7 @@
         </template>
         <el-menu-item
           v-for="childMenu in rootMenu.children"
-          :key="childMenu.path"
+          :key="childMenu.meta.title"
           :index="childMenu.path"
         >
           <template #title>
@@ -45,11 +45,11 @@ export default defineComponent({
     let sidmenuArr = reactive(store.getters.sidmenuArr);
     //获取路由设置默认选择菜单
     let activeMenu = computed((): string => {
-      const { meta, path } = router.currentRoute.value;
+      const { meta, name } = router.currentRoute.value;
       if (!!meta.activeMenu) {
         return meta.activeMenu;
       }
-      return path;
+      return <string>name;
     });
     let isCollapse = computed((): boolean => {
       return !store.getters.sidebar.opened;
