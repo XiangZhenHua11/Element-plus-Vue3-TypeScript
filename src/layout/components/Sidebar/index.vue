@@ -3,7 +3,7 @@
     <el-menu :default-active="activeMenu" :collapse="isCollapse" :router="true">
       <el-submenu
         v-for="rootMenu in sidmenuArr"
-        :key="rootMenu.meta.title"
+        :key="rootMenu.path"
         :index="rootMenu.path"
       >
         <template #title>
@@ -16,7 +16,7 @@
         </template>
         <el-menu-item
           v-for="childMenu in rootMenu.children"
-          :key="childMenu.meta.title"
+          :key="childMenu.path"
           :index="childMenu.path"
         >
           <template #title>
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed } from "vue";
+import { defineComponent, reactive, computed } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
 export default defineComponent({

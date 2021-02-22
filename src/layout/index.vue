@@ -1,10 +1,11 @@
 <template>
-  <div class="app-wrapper">
-    <!-- <div
+  <div :class="classObj" class="app-wrapper">
+    <!-- 手机模式-遮盖层 -->
+    <div
       v-if="classObj.mobile && sidebar.opened"
       class="drawer-bg"
       @click="handleClickOutside"
-    /> -->
+    />
     <div class="main-box flex">
       <sidebar class="sidebar-container" />
       <div class="main-container">
@@ -17,11 +18,29 @@
 
 <script lang="ts">
 import { AppMain, Sidebar, Navbar } from "./components";
-import { defineComponent, ref, reactive } from "vue";
+import store from "@/store";
+import { defineComponent, computed } from "vue";
 export default defineComponent({
   name: "Layout",
   setup() {
-    return {};
+    let sidebar = store.getters.sidebar;
+    //获取不同模式状态
+    let classObj = computed((): any => {
+      return {
+        hideSidebar: !sidebar.opened,
+        openSidebar: sidebar.opened,
+        mobile: false,
+      };
+    });
+    //手机模式-点击遮盖层收起菜单
+    let handleClickOutside = (): void => {
+      store.dispatch("app/toggleSideBar");
+    };
+    return {
+      classObj,
+      sidebar,
+      handleClickOutside,
+    };
   },
   components: {
     Sidebar,
