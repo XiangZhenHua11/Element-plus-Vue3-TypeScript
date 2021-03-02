@@ -1,15 +1,20 @@
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
-    <el-menu :default-active="activeMenu" :collapse="isCollapse" :router="true">
+    <el-menu
+      :default-active="activeMenu"
+      :collapse="isCollapse"
+      :router="true"
+      :text-color="variableArr.menuText"
+      :active-text-color="variableArr.menuActiveText"
+      :background-color="variableArr.menuBg"
+    >
       <el-submenu
         v-for="rootMenu in sidmenuArr"
         :key="rootMenu.path"
         :index="rootMenu.path"
       >
         <template #title>
-          <span class="svg-container">
-            <i :class="rootMenu.meta.icon"></i>
-          </span>
+          <i :class="[rootMenu.meta.icon, 'span-icon']"></i>
           <span v-if="rootMenu.meta && rootMenu.meta.title">{{
             rootMenu.meta.title
           }}</span>
@@ -20,9 +25,7 @@
           :index="childMenu.path"
         >
           <template #title>
-            <span class="svg-container">
-              <i :class="childMenu.meta.icon"></i>
-            </span>
+            <i :class="[childMenu.meta.icon, 'span-icon']"></i>
             <span v-if="childMenu.meta && childMenu.meta.title">{{
               childMenu.meta.title
             }}</span>
@@ -35,6 +38,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, computed } from "vue";
+import variables from "@/styles/variables.scss";
 import store from "@/store";
 import { useRouter } from "vue-router";
 export default defineComponent({
@@ -43,6 +47,8 @@ export default defineComponent({
     let router = useRouter();
     //获取缓存菜单
     let sidmenuArr = reactive(store.getters.sidmenuArr);
+    //scss变量
+    let variableArr = reactive(variables);
     //获取路由设置默认选择菜单
     let activeMenu = computed((): string => {
       const { meta, name } = router.currentRoute.value;
@@ -58,52 +64,16 @@ export default defineComponent({
       sidmenuArr,
       isCollapse,
       activeMenu,
+      variableArr,
     };
   },
 });
 </script>
 
-<style lang="scss">
-.sidebar-container {
-  // reset element-ui css
-  .horizontal-collapse-transition {
-    transition: 0s width ease-in-out, 0s padding-left ease-in-out,
-      0s padding-right ease-in-out;
-  }
-
-  .scrollbar-wrapper {
-    overflow-x: hidden !important;
-  }
-
-  .el-scrollbar__view {
-    height: 100%;
-  }
-
-  .el-scrollbar__bar {
-    &.is-vertical {
-      right: 0px;
-    }
-
-    &.is-horizontal {
-      display: none;
-    }
-  }
-}
-.svg-container {
+<style lang="scss" scoped>
+.span-icon {
   vertical-align: middle;
   width: 30px;
   display: inline-block;
-}
-</style>
-
-<style lang="scss" scoped>
-.el-scrollbar {
-  height: 100%;
-}
-
-.el-menu {
-  border: none;
-  height: 100%;
-  width: 100% !important;
 }
 </style>
