@@ -37,6 +37,18 @@
     </el-aside>
   </el-container>
 </template>
+<style>
+.el-row {
+  height: 40%;
+}
+.el-col-12 {
+  height: 100%;
+}
+.echart-con {
+  height: 58%;
+  margin-top: 1%;
+}
+</style>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 export default defineComponent({
@@ -44,9 +56,13 @@ export default defineComponent({
   setup() {
     let isactive = ref<Number>(0);
     let echart_list = ref<Array<string>>(["bar", "pie", "lin"]);
+    let changeView = (index: Number): void => {
+      isactive.value = index;
+    };
     return {
       isactive,
       echart_list,
+      changeView,
     };
   },
 });
