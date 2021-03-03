@@ -2,7 +2,9 @@
   <div class="navbar">
     <!-- 收缩/展开 -->
     <span class="hamburger-container" @click="toggleSideBar">
-      <i class="iconfont icon-menuOpen"></i>
+      <i
+        :class="['iconfont', 'icon-' + (menuState ? 'menuOpen' : 'menuClose')]"
+      ></i>
     </span>
 
     <!-- 面包屑 -->
@@ -28,7 +30,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed, watch } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
 import Breadcrumb from "@/components/Breadcrumb/index.vue";
@@ -37,6 +39,10 @@ export default defineComponent({
   components: { Breadcrumb },
   setup() {
     let router = useRouter();
+    //菜单展开/收起状态
+    let menuState = computed((): boolean => {
+      return store.getters.sidebar.opened;
+    });
     //退出登录
     let logout = async () => {
       await store.dispatch("user/logout");
@@ -49,6 +55,7 @@ export default defineComponent({
     return {
       logout,
       toggleSideBar,
+      menuState,
     };
   },
 });

@@ -38,9 +38,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive, computed } from "vue";
-import variables from "@/styles/variables.scss";
 import store from "@/store";
 import { useRouter } from "vue-router";
+import variables from "@/styles/variables.scss";
 export default defineComponent({
   name: "SideBar",
   setup() {
