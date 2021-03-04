@@ -15,10 +15,9 @@ import "@/assets/iconfont/iconfont.css";
 // 引用Element-Plus
 import ElementPlus from "element-plus";
 import "element-plus/lib/theme-chalk/index.css";
-import locale from "element-plus/lib/locale/lang/zh-cn";
 
 //引入i18n，国际化语言包
-import i18n from "@/international/il8n";
+import i18n from "@/international/i18n";
 
 createApp(App)
   .use(store)
