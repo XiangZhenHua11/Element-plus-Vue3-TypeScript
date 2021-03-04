@@ -8,7 +8,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">{{ $t("login.title") }}</h3>
       </div>
       <el-form-item prop="username">
         <span class="svg-container">
@@ -19,7 +19,7 @@
           ref="username"
           name="username"
           autocomplete="on"
-          placeholder="账号"
+          :placeholder="$t('login.account')"
         ></el-input>
       </el-form-item>
       <el-form-item prop="password">
@@ -32,11 +32,11 @@
           autocomplete="on"
           ref="password"
           name="password"
-          placeholder="密码"
+          :placeholder="$t('login.password')"
         ></el-input>
       </el-form-item>
       <el-button :loading="loading" type="primary" @click.prevent="loginOn">
-        登录
+        {{ $t("login.loginOn") }}
       </el-button>
     </el-form>
   </div>
@@ -45,10 +45,12 @@
 import { defineComponent, ref, reactive, watch } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 export default defineComponent({
   name: "login",
   setup() {
     let router = useRouter();
+    const { t } = useI18n();
     let loading = ref<boolean>(false);
     let redirect = ref<string>("");
     let otherQuery = ref<any>({});
@@ -58,10 +60,17 @@ export default defineComponent({
       password: "wwww",
     });
     let loginRules = reactive({
-      username: [{ required: true, message: "请输入账号", trigger: "change" }],
+      username: [
+        { required: true, message: t("login.accountRule"), trigger: "change" },
+      ],
       password: [
-        { required: true, message: "请输入密码", trigger: "change" },
-        { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "change" },
+        { required: true, message: t("login.passwordRule"), trigger: "change" },
+        {
+          min: 3,
+          max: 5,
+          message: t("login.passwordRule_length"),
+          trigger: "change",
+        },
       ],
     });
     //获取路由其他参数

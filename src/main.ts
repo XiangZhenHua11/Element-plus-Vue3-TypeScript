@@ -17,8 +17,12 @@ import ElementPlus from "element-plus";
 import "element-plus/lib/theme-chalk/index.css";
 import locale from "element-plus/lib/locale/lang/zh-cn";
 
+//引入i18n，国际化语言包
+import i18n from "@/international/il8n";
+
 createApp(App)
   .use(store)
   .use(router)
-  .use(ElementPlus, { locale })
+  .use(i18n)
+  .use(ElementPlus)
   .mount("#app");

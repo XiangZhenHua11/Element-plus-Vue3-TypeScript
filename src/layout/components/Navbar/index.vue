@@ -21,7 +21,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item divided @click="logout">
-              <span style="display: block">Log Out</span>
+              <span style="display: block"> {{ $t("navbar.logout") }}</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
