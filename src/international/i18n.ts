@@ -5,5 +5,6 @@ import { getLanguage } from "@/utils/cookies";
 const i18n = createI18n({
   locale: getLanguage() || "cn",
   messages,
+  silentTranslationWarn: true, // 去除console中黄色报错
 });
 export default i18n;

@@ -11,35 +11,68 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <el-dropdown>
-        <el-avatar
-          :size="45"
-          :src="
-            'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80'
-          "
-        ></el-avatar>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item divided @click="logout">
-              <span style="display: block"> {{ $t("navbar.logout") }}</span>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+      <el-menu mode="horizontal">
+        <el-menu-item>
+          <!-- 切换语言 -->
+          <el-dropdown @command="changeLanguage">
+            <span class="el-dropdown-link">
+              {{ $t("language." + currentLanguage)
+              }}<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item
+                  v-for="item in languageArr"
+                  :key="item"
+                  :disabled="currentLanguage == item"
+                  :command="item"
+                  >{{ $t("language." + item) }}</el-dropdown-item
+                >
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </el-menu-item>
+        <el-menu-item>
+          <!-- 头像 -->
+          <el-dropdown>
+            <el-avatar
+              :size="40"
+              :src="
+                'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80'
+              "
+            ></el-avatar>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item divided @click="logout">
+                  <span style="display: block"> {{ $t("navbar.logout") }}</span>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </el-menu-item>
+      </el-menu>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed, watch } from "vue";
+import { defineComponent, computed, reactive } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
 import Breadcrumb from "@/components/Breadcrumb/index.vue";
+import { useI18n } from "vue-i18n";
 export default defineComponent({
   name: "console",
   components: { Breadcrumb },
   setup() {
     let router = useRouter();
-    //菜单展开/收起状态
+    const I18n = useI18n();
+    //获取语种数组
+    let languageArr = reactive<Array<string>>(I18n.availableLocales);
+    //获取当前语言
+    let currentLanguage = computed((): string => {
+      return I18n.locale.value;
+    });
+    //获取菜单展开/收起状态
     let menuState = computed((): boolean => {
       return store.getters.sidebar.opened;
     });
@@ -52,10 +85,18 @@ export default defineComponent({
     let toggleSideBar = () => {
       store.dispatch("app/toggleSideBar");
     };
+    //切换语言
+    let changeLanguage = (item: string) => {
+      I18n.locale.value = item;
+      store.dispatch("app/toggleLanguage", item);
+    };
     return {
       logout,
       toggleSideBar,
       menuState,
+      languageArr,
+      currentLanguage,
+      changeLanguage,
     };
   },
 });
@@ -95,23 +136,12 @@ export default defineComponent({
     &:focus {
       outline: none;
     }
-
-    .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
-      height: 100%;
-      font-size: 18px;
-      color: #5a5e66;
-      vertical-align: text-bottom;
-
-      &.hover-effect {
-        cursor: pointer;
-        transition: background 0.3s;
-
-        &:hover {
-          background: rgba(0, 0, 0, 0.025);
-        }
-      }
+    .el-dropdown-link,
+    .el-dropdown-selfdefine {
+      display: block;
+      font-size: 16px;
+      color: #888;
+      margin-bottom: 10%;
     }
   }
 }
