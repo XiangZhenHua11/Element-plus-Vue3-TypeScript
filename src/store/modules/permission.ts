@@ -13,7 +13,8 @@ interface resData_Inf {
   guid: string; //唯一主键
   parentGuid: string; //父节点主键
   liName: string; //节点名称
-  liDataName: string; //节点英文名称
+  liEnglishName: string; //节点名称
+  liDataName: string; //节点数据名称
   liIcon: string; //节点图标
   isChild: boolean; //是否有子级
   isEnable: boolean; //是否有效
@@ -55,6 +56,7 @@ const generaMenu = (data: any) => {
       children: [],
       meta: {
         title: item.liName,
+        titleEnglish: item.liEnglishName,
         id: item.guid,
         roles: ["system"],
         icon: item.liIcon,
@@ -99,6 +101,7 @@ function joinChildMemu(menu: routerMenu_Inf, data: Array<any>) {
       children: [],
       meta: {
         title: item.liName,
+        titleEnglish: item.liEnglishName,
         id: item.guid,
         roles: ["system"],
         icon: item.liIcon,

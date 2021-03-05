@@ -16,7 +16,9 @@
         <template #title>
           <i :class="[rootMenu.meta.icon, 'span-icon']"></i>
           <span v-if="rootMenu.meta && rootMenu.meta.title">{{
-            rootMenu.meta.title
+            currentLanguage == "cn"
+              ? rootMenu.meta.title
+              : rootMenu.meta.titleEnglish
           }}</span>
         </template>
         <el-menu-item
@@ -27,7 +29,9 @@
           <template #title>
             <i :class="[childMenu.meta.icon, 'span-icon']"></i>
             <span v-if="childMenu.meta && childMenu.meta.title">{{
-              childMenu.meta.title
+              currentLanguage == "cn"
+                ? childMenu.meta.title
+                : childMenu.meta.titleEnglish
             }}</span>
           </template>
         </el-menu-item>
@@ -41,12 +45,18 @@ import { defineComponent, reactive, computed } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
 import variables from "@/styles/variables.scss";
+import { useI18n } from "vue-i18n";
 export default defineComponent({
   name: "SideBar",
   setup() {
     let router = useRouter();
+    const I18n = useI18n();
     //获取缓存菜单
     let sidmenuArr = reactive(store.getters.sidmenuArr);
+    //获取当前语言
+    let currentLanguage = computed((): string => {
+      return I18n.locale.value;
+    });
     //scss变量
     let variableArr = reactive(variables);
     //获取路由设置默认选择菜单
@@ -62,6 +72,7 @@ export default defineComponent({
     });
     return {
       sidmenuArr,
+      currentLanguage,
       isCollapse,
       activeMenu,
       variableArr,

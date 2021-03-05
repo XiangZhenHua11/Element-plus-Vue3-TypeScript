@@ -5,9 +5,13 @@
         <span
           v-if="!item.redirect || index == levelList.length - 1"
           class="no-redirect"
-          >{{ item.meta.title }}</span
+          >{{
+            currentLanguage == "cn" ? item.meta.title : item.meta.titleEnglish
+          }}</span
         >
-        <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
+        <a v-else @click.prevent="handleLink(item)">{{
+          currentLanguage == "cn" ? item.meta.title : item.meta.titleEnglish
+        }}</a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -15,10 +19,16 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { useRouter, RouteRecordRaw } from "vue-router";
+import { useI18n } from "vue-i18n";
 export default defineComponent({
   name: "Breadcrumb",
   setup() {
     let router = useRouter();
+    const I18n = useI18n();
+    //获取当前语言
+    let currentLanguage = computed((): string => {
+      return I18n.locale.value;
+    });
     let levelList = computed(
       (): Array<RouteRecordRaw> => {
         //获取路由记录
@@ -29,7 +39,9 @@ export default defineComponent({
         //判断第一个是否为固定的主页
         if (!isConsole(matched[0])) {
           let homePageArr: Array<RouteRecordRaw> = [
-            { path: "/homePage", meta: { title: "主页" }, redirect: "/" },
+            <RouteRecordRaw>(
+              router.getRoutes().find((x) => x.name == "homePage")
+            ),
           ];
           matched = homePageArr.concat(matched);
         }
@@ -57,6 +69,7 @@ export default defineComponent({
     return {
       levelList,
       handleLink,
+      currentLanguage,
     };
   },
 });
