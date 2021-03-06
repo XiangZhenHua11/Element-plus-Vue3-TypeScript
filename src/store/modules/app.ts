@@ -1,4 +1,8 @@
-import Cookies from "js-cookie";
+import {
+  setLanguage,
+  setSidebarStatus,
+  getSidebarStatus,
+} from "@/utils/cookies";
 
 interface app_Inf {
   sidebar: sidebar_Inf;
@@ -10,9 +14,7 @@ interface sidebar_Inf {
 }
 const state: app_Inf = {
   sidebar: {
-    opened: !!eval(<string>Cookies.get("sidebarStatus") || "true")
-      ? true
-      : false,
+    opened: !!eval(<string>getSidebarStatus() || "true") ? true : false,
   },
   language: "",
 };
@@ -20,12 +22,12 @@ const mutations = {
   //设置菜单收起/展开状态
   TOGGLE_SIDEBAR: (state: app_Inf) => {
     state.sidebar.opened = !state.sidebar.opened;
-    Cookies.set("sidebarStatus", !!state.sidebar.opened ? "true" : "false");
+    setSidebarStatus(!!state.sidebar.opened ? "true" : "false");
   },
   //设置语言
   TOGGLE_LANGUAGE: (state: app_Inf, language: string) => {
     state.language = language;
-    Cookies.set("setLanguage", language);
+    setLanguage(language);
   },
 };
 const actions = {
