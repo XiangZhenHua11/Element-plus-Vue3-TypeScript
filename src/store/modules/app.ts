@@ -10,7 +10,9 @@ interface sidebar_Inf {
 }
 const state: app_Inf = {
   sidebar: {
-    opened: !!eval(<string>Cookies.get("sidebarStatus")) ? true : false,
+    opened: !!eval(<string>Cookies.get("sidebarStatus") || "true")
+      ? true
+      : false,
   },
   language: "",
 };
