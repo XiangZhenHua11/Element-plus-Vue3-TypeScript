@@ -6,7 +6,7 @@ const cn: any = {
   },
   //登录模块
   login: {
-    title: "登录表单",
+    title: "系统登录",
     account: "账号",
     password: "密码",
     loginOn: "登录",

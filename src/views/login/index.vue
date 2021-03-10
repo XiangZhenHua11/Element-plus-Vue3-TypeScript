@@ -9,6 +9,24 @@
     >
       <div class="title-container">
         <h3 class="title">{{ $t("login.title") }}</h3>
+        <!-- 切换语言 -->
+        <el-dropdown @command="changeLanguage" class="language-dropdown">
+          <span class="el-dropdown-link">
+            {{ $t("language." + currentLanguage)
+            }}<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item
+                v-for="item in languageArr"
+                :key="item"
+                :disabled="currentLanguage == item"
+                :command="item"
+                >{{ $t("language." + item) }}</el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
       <el-form-item prop="username">
         <span class="svg-container">
@@ -42,7 +60,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, watch } from "vue";
+import { defineComponent, ref, reactive, watch, computed } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -50,7 +68,8 @@ export default defineComponent({
   name: "login",
   setup() {
     let router = useRouter();
-    const { t } = useI18n();
+    let I18n = useI18n();
+    let { t } = I18n;
     let loading = ref<boolean>(false);
     let redirect = ref<string>("");
     let otherQuery = ref<any>({});
@@ -59,6 +78,7 @@ export default defineComponent({
       username: "system",
       password: "wwww",
     });
+    //登录验证规则
     let loginRules = reactive({
       username: [
         { required: true, message: t("login.accountRule"), trigger: "change" },
@@ -73,6 +93,17 @@ export default defineComponent({
         },
       ],
     });
+    //获取语种数组
+    let languageArr = reactive<Array<string>>(I18n.availableLocales);
+    //获取当前语言
+    let currentLanguage = computed((): string => {
+      return I18n.locale.value;
+    });
+    //切换语言
+    let changeLanguage = (item: string) => {
+      I18n.locale.value = item;
+      store.dispatch("app/toggleLanguage", item);
+    };
     //获取路由其他参数
     let getOtherQuery = (query: any): any => {
       return Object.keys(query).reduce((acc, cur) => {
@@ -94,6 +125,7 @@ export default defineComponent({
         immediate: true,
       }
     );
+    //登录
     let loginOn = (): void => {
       (loginFormRef.value as any).validate(async (valid: boolean) => {
         if (valid) {
@@ -116,6 +148,9 @@ export default defineComponent({
       loginForm,
       loginFormRef,
       loginOn,
+      languageArr,
+      currentLanguage,
+      changeLanguage,
     };
   },
 });
@@ -154,7 +189,13 @@ export default defineComponent({
       }
     }
   }
-
+  .language-dropdown {
+    color: #eee;
+    position: absolute;
+    top: 0px;
+    font-size: 18px;
+    right: 0;
+  }
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.1);

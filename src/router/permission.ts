@@ -4,6 +4,7 @@ import "nprogress/nprogress.css";
 import { ElMessage } from "element-plus";
 import store from "@/store";
 import { RouteRecordRaw } from "vue-router";
+import { getLanguage } from "@/utils/cookies";
 
 NProgress.configure({ showSpinner: false });
 
@@ -65,6 +66,17 @@ router.afterEach((to: any) => {
   // Finish progress bar
   NProgress.done();
 
-  // set page title
-  document.title = to.meta.title;
+  //获取当前语言 设置 page title
+  let title = "";
+  switch (getLanguage()) {
+    case "cn":
+      //中文
+      title = to.meta.title;
+      break;
+    case "en":
+      //英文
+      title = to.meta.titleEnglish;
+      break;
+  }
+  document.title = title;
 });
