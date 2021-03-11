@@ -24,7 +24,6 @@ export default defineComponent({
     let field = computed(() => {
       return "title" + store.getters.language.suffix;
     });
-    console.log(field.value);
     let levelList = computed(
       (): Array<RouteRecordRaw> => {
         //获取路由记录

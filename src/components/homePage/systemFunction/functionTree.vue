@@ -12,7 +12,7 @@
       <span class="custom-tree-node">
         <span>
           <i :class="data.liIcon"></i>
-          {{ data.liName }}
+          {{ data[field] }}
         </span>
       </span>
     </template>
@@ -31,18 +31,14 @@ export default defineComponent({
     showCheckBox: { type: Boolean, default: false },
   },
   setup() {
-    //获取当前语言字段
-    let field = computed(
-      async (): Promise<string> => {
-        return await store.dispatch("app/getLanguageField", "router");
-      }
-    );
+    //获取当前语言后缀
+    let field = computed(() => {
+      return "liName" + store.getters.language.suffix;
+    });
     let defaultProps = ref({
       children: "children",
-      label: field.value,
       isLeaf: "isChild",
     });
-    console.log(defaultProps);
     let initLazyTree = async (node: any, resolve: any) => {
       //节点guid
       let guid = !node.data ? "" : node.data.guid;
@@ -54,11 +50,14 @@ export default defineComponent({
       });
       resolve(data);
     };
-    let handleNodeClick = (): void => {};
+    let handleNodeClick = (node: any): void => {
+      
+    };
     return {
       initLazyTree,
       defaultProps,
       handleNodeClick,
+      field,
     };
   },
 });

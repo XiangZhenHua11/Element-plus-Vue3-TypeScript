@@ -16,7 +16,7 @@
         <!-- 头部工具栏 -->
         <el-header class="toolbar">
           <el-form :inline="true">
-            <el-form-item label="功能名称">
+            <el-form-item :label="$t('systemFunction.formArr.liName')">
               <el-input></el-input>
             </el-form-item>
             <el-form-item>
@@ -56,18 +56,23 @@
           </el-form>
         </el-header>
         <!-- 表格主体 -->
-        <el-main> </el-main>
+        <el-main>
+          <functionTable></functionTable>
+        </el-main>
       </el-container>
     </el-card>
   </el-container>
 </template>
 <script lang="ts">
-import functionTree from "@/components/homePage/systemFunction/functionTree.vue"; //时间轴
+//功能目录
+import functionTree from "@/components/homePage/systemFunction/functionTree.vue";
+import functionTable from "@/components/homePage/systemFunction/functionTable.vue";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "systemFunction",
   components: {
     functionTree,
+    functionTable,
   },
 });
 </script>

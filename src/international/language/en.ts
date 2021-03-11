@@ -17,6 +17,15 @@ const en: any = {
   //系统功能
   systemFunction: {
     functionMenu: "Function Catalog",
+    formArr: {
+      liName: "Function name",
+      liDataName: "Name",
+      liHref: "Address",
+      liIcon: "Icon",
+      isChild: "Child node",
+      isEnable: "Enable",
+      remark: "Remark",
+    },
   },
   //头部标签
   navbar: {
