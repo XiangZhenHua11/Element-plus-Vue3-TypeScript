@@ -15,11 +15,7 @@
       >
         <template #title>
           <i :class="[rootMenu.meta.icon, 'span-icon']"></i>
-          <span v-if="rootMenu.meta && rootMenu.meta.title">{{
-            currentLanguage == "cn"
-              ? rootMenu.meta.title
-              : rootMenu.meta.titleEnglish
-          }}</span>
+          <span v-if="!!rootMenu.meta">{{ rootMenu.meta[field] }}</span>
         </template>
         <el-menu-item
           v-for="childMenu in rootMenu.children"
@@ -28,11 +24,7 @@
         >
           <template #title>
             <i :class="[childMenu.meta.icon, 'span-icon']"></i>
-            <span v-if="childMenu.meta && childMenu.meta.title">{{
-              currentLanguage == "cn"
-                ? childMenu.meta.title
-                : childMenu.meta.titleEnglish
-            }}</span>
+            <span v-if="!!childMenu.meta">{{ childMenu.meta[field] }}</span>
           </template>
         </el-menu-item>
       </el-submenu>
@@ -45,17 +37,15 @@ import { defineComponent, reactive, computed } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
 import variables from "@/styles/variables.scss";
-import { useI18n } from "vue-i18n";
 export default defineComponent({
   name: "SideBar",
   setup() {
     let router = useRouter();
-    const I18n = useI18n();
     //获取缓存菜单
     let sidmenuArr = reactive(store.getters.sidmenuArr);
-    //获取当前语言
-    let currentLanguage = computed((): string => {
-      return I18n.locale.value;
+    //获取当前语言字段
+    let field = computed(() => {
+      return "title" + store.getters.language.suffix;
     });
     //scss变量
     let variableArr = reactive(variables);
@@ -72,10 +62,10 @@ export default defineComponent({
     });
     return {
       sidmenuArr,
-      currentLanguage,
       isCollapse,
       activeMenu,
       variableArr,
+      field,
     };
   },
 });

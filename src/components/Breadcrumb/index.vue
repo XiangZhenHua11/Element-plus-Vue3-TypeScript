@@ -5,13 +5,9 @@
         <span
           v-if="!item.redirect || index == levelList.length - 1"
           class="no-redirect"
-          >{{
-            currentLanguage == "cn" ? item.meta.title : item.meta.titleEnglish
-          }}</span
+          >{{ item.meta[field] }}</span
         >
-        <a v-else @click.prevent="handleLink(item)">{{
-          currentLanguage == "cn" ? item.meta.title : item.meta.titleEnglish
-        }}</a>
+        <a v-else @click.prevent="handleLink(item)">{{ item.meta[field] }}</a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -19,16 +15,16 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { useRouter, RouteRecordRaw } from "vue-router";
-import { useI18n } from "vue-i18n";
+import store from "@/store";
 export default defineComponent({
   name: "Breadcrumb",
   setup() {
     let router = useRouter();
-    const I18n = useI18n();
-    //获取当前语言
-    let currentLanguage = computed((): string => {
-      return I18n.locale.value;
+    //获取当前语言字段
+    let field = computed(() => {
+      return "title" + store.getters.language.suffix;
     });
+    console.log(field.value);
     let levelList = computed(
       (): Array<RouteRecordRaw> => {
         //获取路由记录
@@ -69,7 +65,7 @@ export default defineComponent({
     return {
       levelList,
       handleLink,
-      currentLanguage,
+      field,
     };
   },
 });

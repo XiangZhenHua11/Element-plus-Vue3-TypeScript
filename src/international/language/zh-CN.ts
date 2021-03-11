@@ -14,6 +14,10 @@ const cn: any = {
     passwordRule: "请输入密码",
     passwordRule_length: "请输入密码",
   },
+  //系统功能
+  systemFunction: {
+    functionMenu: "功能目录",
+  },
   //头部标签
   navbar: {
     logout: "退出登录",

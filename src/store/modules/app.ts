@@ -1,22 +1,33 @@
 import {
+  getLanguage,
   setLanguage,
   setSidebarStatus,
   getSidebarStatus,
 } from "@/utils/cookies";
 
 interface app_Inf {
-  sidebar: sidebar_Inf;
-  language: string;
+  sidebar: sidebar_Inf; //菜单
+  language: language_Inf; //语言
 }
 //菜单接口
 interface sidebar_Inf {
   opened: boolean;
 }
+//语言接口
+interface language_Inf {
+  current: string;
+  suffix: string;
+}
 const state: app_Inf = {
   sidebar: {
     opened: !!eval(<string>getSidebarStatus() || "true") ? true : false,
   },
-  language: "",
+  language: {
+    //当前语言
+    current: getLanguage(),
+    //后缀
+    suffix: "",
+  },
 };
 const mutations = {
   //设置菜单收起/展开状态
@@ -26,7 +37,8 @@ const mutations = {
   },
   //设置语言
   TOGGLE_LANGUAGE: (state: app_Inf, language: string) => {
-    state.language = language;
+    state.language.current = language;
+    state.language.suffix = language == "cn" ? "" : "_" + language;
     setLanguage(language);
   },
 };

@@ -1,6 +1,6 @@
 import router from "@/router/index";
 import { getToken, setToken, removeToken } from "@/utils/cookies";
-import { login, logout, getUserInfo } from "@/api/users";
+import { login, logout, getUserInfo } from "@/api/app/users";
 
 const getDefaultState = () => {
   return {

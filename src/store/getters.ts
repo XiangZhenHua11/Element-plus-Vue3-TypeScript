@@ -1,5 +1,6 @@
 const getters = {
   sidebar: (state: any) => state.app.sidebar,
+  language: (state: any) => state.app.language,
   token: (state: any) => state.user.token,
   name: (state: any) => state.user.name,
   headImg: (state: any) => state.user.headImg,

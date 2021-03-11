@@ -3,7 +3,7 @@ import messages from "./index";
 import { getLanguage } from "@/utils/cookies";
 //注册并引入语言文件
 const i18n = createI18n({
-  locale: getLanguage() || "cn",
+  locale: getLanguage(),
   messages,
   silentTranslationWarn: true, // 去除console中黄色报错
 });

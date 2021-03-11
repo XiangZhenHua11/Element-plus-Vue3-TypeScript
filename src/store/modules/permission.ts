@@ -1,5 +1,5 @@
 import router from "@/router";
-import { loadSideMenu } from "@/api/home";
+import { loadSideMenu } from "@/api/app/home";
 import Layout from "@/layout/index.vue";
 
 interface state {
@@ -13,7 +13,7 @@ interface resData_Inf {
   guid: string; //唯一主键
   parentGuid: string; //父节点主键
   liName: string; //节点名称
-  liEnglishName: string; //节点名称
+  liName_en: string; //节点名称
   liDataName: string; //节点数据名称
   liIcon: string; //节点图标
   isChild: boolean; //是否有子级
@@ -56,7 +56,7 @@ const generaMenu = (data: any) => {
       children: [],
       meta: {
         title: item.liName,
-        titleEnglish: item.liEnglishName,
+        title_en: item.liName_en,
         id: item.guid,
         roles: ["system"],
         icon: item.liIcon,
@@ -101,7 +101,7 @@ function joinChildMemu(menu: routerMenu_Inf, data: Array<any>) {
       children: [],
       meta: {
         title: item.liName,
-        titleEnglish: item.liEnglishName,
+        title_en: item.liName_en,
         id: item.guid,
         roles: ["system"],
         icon: item.liIcon,

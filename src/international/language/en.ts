@@ -14,6 +14,10 @@ const en: any = {
     passwordRule: "Please enter the password",
     passwordRule_length: "The length is between 3 and 5 characters",
   },
+  //系统功能
+  systemFunction: {
+    functionMenu: "Function Catalog",
+  },
   //头部标签
   navbar: {
     logout: "Log Out",

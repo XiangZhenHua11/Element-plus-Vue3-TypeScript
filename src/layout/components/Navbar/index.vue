@@ -58,7 +58,7 @@
 import { defineComponent, computed, reactive } from "vue";
 import store from "@/store";
 import { useRouter } from "vue-router";
-import Breadcrumb from "@/components/Breadcrumb/index.vue";
+import Breadcrumb from "@/components/breadcrumb/index.vue";
 import { useI18n } from "vue-i18n";
 export default defineComponent({
   name: "console",

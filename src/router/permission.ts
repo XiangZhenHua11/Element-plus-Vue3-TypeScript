@@ -62,21 +62,11 @@ router.beforeEach(async (to: any, _: any, next: any) => {
   }
 });
 
-router.afterEach((to: any) => {
+router.afterEach(async (to: any) => {
   // Finish progress bar
   NProgress.done();
-
+  // 获取语言字段
+  const field = "title" + store.getters.language.suffix;
   //获取当前语言 设置 page title
-  let title = "";
-  switch (getLanguage()) {
-    case "cn":
-      //中文
-      title = to.meta.title;
-      break;
-    case "en":
-      //英文
-      title = to.meta.titleEnglish;
-      break;
-  }
-  document.title = title;
+  document.title = to.meta[field];
 });

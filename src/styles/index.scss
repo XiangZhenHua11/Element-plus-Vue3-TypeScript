@@ -68,6 +68,7 @@ div:focus {
 .app-main {
   min-height: calc(100vh - 85px) !important;
   height: 90% !important;
+  padding: 1%;
 }
 
 /*扩展样式*/
@@ -103,7 +104,7 @@ div:focus {
 .el-card__body {
   height: 100%;
 }
-.el-card + .el-card {
+.box-card + .box-card {
   margin-left: 1%;
   width: 100%;
 }
