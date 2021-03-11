@@ -1,6 +1,6 @@
 <template>
   <el-pagination
-    v-if="hidden"
+    v-if="!hidden"
     :background="background"
     :current-page="currentPage"
     :page-size="pageSize"

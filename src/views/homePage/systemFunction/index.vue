@@ -64,8 +64,9 @@
   </el-container>
 </template>
 <script lang="ts">
-//功能目录
+//功能目录-tree
 import functionTree from "@/components/homePage/systemFunction/functionTree.vue";
+//功能目录-table
 import functionTable from "@/components/homePage/systemFunction/functionTable.vue";
 import { defineComponent } from "vue";
 export default defineComponent({
