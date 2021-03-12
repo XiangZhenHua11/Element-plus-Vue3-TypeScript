@@ -12,7 +12,7 @@ const cn: any = {
     loginOn: "登录",
     accountRule: "请输入账号",
     passwordRule: "请输入密码",
-    passwordRule_length: "请输入密码",
+    passwordRule_length: "长度在3到5个字符之间",
   },
   //系统功能
   systemFunction: {
