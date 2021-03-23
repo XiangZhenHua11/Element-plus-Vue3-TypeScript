@@ -5,7 +5,6 @@
       <template #header>
         <div class="card-header">
           <span>{{ $t("systemFunction.functionMenu") }}</span>
-          <span>{{ formVisible }}</span>
         </div>
       </template>
       <el-aside>
@@ -14,21 +13,23 @@
     </el-card>
     <el-card class="box-card">
       <!-- 表格 -->
-      <functionTable :formVisible="formVisible"></functionTable>
+      <functionTable v-model:formVisible="formVisible"></functionTable>
     </el-card>
     <!-- form表单 -->
-    <functionForm :formVisible="formVisible" ref="functionForm"></functionForm>
+    <functionForm
+      v-model:formVisible="formVisible"
+      ref="functionForm"
+    ></functionForm>
   </el-container>
 </template>
 <script lang="ts">
-//功能目录-tree
-//功能目录-tree
+// 左侧树形菜单
 import functionTree from "@/components/homePage/systemFunction/tree.vue";
-//功能目录-table
+// 表格
 import functionTable from "@/components/homePage/systemFunction/table.vue";
+// form表单
 import functionForm from "@/components/homePage/systemFunction/form.vue";
 import { defineComponent, ref } from "vue";
-import variables from "@/styles/variables.scss";
 export default defineComponent({
   name: "systemFunction",
   components: {

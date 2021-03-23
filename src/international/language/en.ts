@@ -4,23 +4,31 @@ const en: any = {
     cn: "Chinese",
     en: "English",
   },
+  //公共模版
+  common: {
+    enter: "Please enter the ",
+    select: "Please select the ",
+    define: "define",
+    cancel: "cancel",
+  },
   //登录模块
   login: {
     title: "Login Form",
-    account: "Account",
+    username: "Account",
     password: "Password",
     loginOn: "Sign in",
-    accountRule: "Please enter the account",
-    passwordRule: "Please enter the password",
     passwordRule_length: "The length is between 3 and 5 characters",
   },
   //系统功能
   systemFunction: {
+    name: "System Function",
     functionMenu: "Function Catalog",
-    formArr: {
+    form: {
       liName: "Function name",
       liDataName: "Name",
+      parentGuid: "Parent",
       liHref: "Address",
+      orderNum: "Sort number",
       liIcon: "Icon",
       isChild: "Child node",
       isEnable: "Enable",

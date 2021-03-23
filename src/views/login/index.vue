@@ -37,7 +37,7 @@
           ref="username"
           name="username"
           autocomplete="on"
-          :placeholder="$t('login.account')"
+          :placeholder="$t('login.username')"
         ></el-input>
       </el-form-item>
       <el-form-item prop="password">
@@ -78,20 +78,27 @@ export default defineComponent({
       username: "system",
       password: "wwww",
     });
+    //验证账号
+    let validator_username = (rule: any, value: string, callback: any) => {
+      if (!value) {
+        return callback(new Error(t("common.enter") + t("login.username")));
+      }
+      return callback();
+    };
+    //验证密码
+    let validator_passward = (rule: any, value: string, callback: any) => {
+      if (!value) {
+        return callback(new Error(t("common.enter") + t("login.password")));
+      }
+      if (value.length < 3 || value.length > 5) {
+        return callback(new Error(t("login.passwordRule_length")));
+      }
+      return callback();
+    };
     //登录验证规则
     let loginRules = reactive({
-      username: [
-        { required: true, message: t("login.accountRule"), trigger: "change" },
-      ],
-      password: [
-        { required: true, message: t("login.passwordRule"), trigger: "change" },
-        {
-          min: 3,
-          max: 5,
-          message: t("login.passwordRule_length"),
-          trigger: "change",
-        },
-      ],
+      username: [{ validator: validator_username, trigger: "change" }],
+      password: [{ validator: validator_passward, trigger: "change" }],
     });
     //获取语种数组
     let languageArr = reactive<Array<string>>(I18n.availableLocales);

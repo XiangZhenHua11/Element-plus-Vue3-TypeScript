@@ -3,7 +3,7 @@
     <!-- 头部工具栏 -->
     <el-header class="toolbar">
       <el-form :inline="true">
-        <el-form-item :label="$t('systemFunction.formArr.liName')">
+        <el-form-item :label="$t('systemFunction.form.liName')">
           <el-input v-model="listQuery.liName"></el-input>
         </el-form-item>
         <el-form-item>
@@ -59,24 +59,24 @@
       >
         <el-table-column
           prop="liName"
-          :label="$t('systemFunction.formArr.liName')"
+          :label="$t('systemFunction.form.liName')"
           sortable
           width="180"
         />
         <el-table-column
           prop="liDataName"
-          :label="$t('systemFunction.formArr.liDataName')"
+          :label="$t('systemFunction.form.liDataName')"
           sortable
           width="180"
         />
         <el-table-column
           prop="element_liHref"
-          :label="$t('systemFunction.formArr.liHref')"
+          :label="$t('systemFunction.form.liHref')"
           width="300"
         />
         <el-table-column
           prop="liIcon"
-          :label="$t('systemFunction.formArr.liIcon')"
+          :label="$t('systemFunction.form.liIcon')"
           width="100"
           align="center"
         >
@@ -86,7 +86,7 @@
         </el-table-column>
         <el-table-column
           prop="isChild"
-          :label="$t('systemFunction.formArr.isChild')"
+          :label="$t('systemFunction.form.isChild')"
           width="100"
           align="center"
         >
@@ -101,7 +101,7 @@
         </el-table-column>
         <el-table-column
           prop="isEnable"
-          :label="$t('systemFunction.formArr.isEnable')"
+          :label="$t('systemFunction.form.isEnable')"
           width="100"
           align="center"
         >
@@ -116,17 +116,17 @@
         </el-table-column>
         <el-table-column
           prop="remark"
-          :label="$t('systemFunction.formArr.remark')"
+          :label="$t('systemFunction.form.remark')"
         />
       </el-table>
     </el-main>
   </el-container>
-  <pagination
+  <!-- <pagination
     :total="total"
     :page="listQuery.page"
     :limit="listQuery.limit"
     @pagination="initGrid"
-  />
+  /> -->
 </template>
 
 <script lang="ts">
@@ -146,8 +146,15 @@ export default defineComponent({
   props: {
     //表单显示状态
     formVisible: { type: Boolean, default: false },
+    key: String,
   },
+  // emits: {
+  //   updateFormVisible: (payload: any) => {
+  //     return payload.type === "close";
+  //   },
+  // },
   setup(props, context) {
+    let show = ref(props.formVisible);
     let listData = ref<any>([]);
     let listLoading = ref<boolean>(true);
     let total = ref<number>(0);
@@ -184,7 +191,6 @@ export default defineComponent({
     };
     //新增form
     let addForm = (): void => {
-      debugger;
       context.emit("update:formVisible", true);
     };
     //编辑form
@@ -209,6 +215,7 @@ export default defineComponent({
       deleteForm,
       tableRef,
       currentChange,
+      show,
     };
   },
 });
