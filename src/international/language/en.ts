@@ -19,22 +19,6 @@ const en: any = {
     loginOn: "Sign in",
     passwordRule_length: "The length is between 3 and 5 characters",
   },
-  //系统功能
-  systemFunction: {
-    name: "System Function",
-    functionMenu: "Function Catalog",
-    form: {
-      liName: "Function name",
-      liDataName: "Name",
-      parentGuid: "Parent",
-      liHref: "Address",
-      orderNum: "Sort number",
-      liIcon: "Icon",
-      isChild: "Child node",
-      isEnable: "Enable",
-      remark: "Remark",
-    },
-  },
   //头部标签
   navbar: {
     logout: "Log Out",
