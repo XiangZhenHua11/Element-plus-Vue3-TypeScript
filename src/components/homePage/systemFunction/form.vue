@@ -4,14 +4,19 @@
     :title="$t('systemFunction.name')"
     @close="onClose()"
   >
-    <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+    <el-form
+      ref="formRef"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+    >
       <el-col :span="12">
         <el-form-item
           :label="$t('systemFunction.form.liDataName')"
           prop="liDataName"
         >
           <el-input
-            v-model="form.liDataName"
+            v-model="formData.liDataName"
             clearable
             :placeholder="
               $t('common.enter') + $t('systemFunction.form.liDataName')
@@ -22,7 +27,7 @@
       <el-col :span="12">
         <el-form-item :label="$t('systemFunction.form.liName')" prop="liName">
           <el-input
-            v-model="form.liName"
+            v-model="formData.liName"
             clearable
             :placeholder="$t('common.enter') + $t('systemFunction.form.liName')"
           ></el-input>
@@ -31,7 +36,7 @@
       <el-col :span="12">
         <el-form-item :label="$t('systemFunction.form.parentGuid')">
           <el-input
-            v-model="form.parentGuid"
+            v-model="formData.parentGuid"
             clearable
             :placeholder="
               $t('common.select') + $t('systemFunction.form.parentGuid')
@@ -58,13 +63,13 @@
       </el-col> -->
       <el-col :span="12">
         <el-form-item :label="$t('systemFunction.form.liIcon')" prop="liIcon">
-          <el-input v-model="form.liIcon" clearable></el-input>
+          <el-input v-model="formData.liIcon" clearable></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item :label="$t('systemFunction.form.liHref')">
           <el-input
-            v-model="form.element_liHref"
+            v-model="formData.element_liHref"
             clearable
             :placeholder="$t('common.enter') + $t('systemFunction.form.liHref')"
           ></el-input>
@@ -73,7 +78,7 @@
       <el-col :span="12">
         <el-form-item :label="$t('systemFunction.form.orderNum')">
           <el-input
-            v-model="form.orderNum"
+            v-model="formData.orderNum"
             clearable
             :placeholder="
               $t('common.enter') + $t('systemFunction.form.orderNum')
@@ -84,7 +89,7 @@
       <el-col :span="12">
         <el-form-item :label="$t('systemFunction.form.isEnable')">
           <el-switch
-            v-model="form.isEnable"
+            v-model="formData.isEnable"
             active-color="#13ce66"
             inactive-color="#ff4949"
           ></el-switch>
@@ -93,7 +98,7 @@
       <el-col :span="12">
         <el-form-item :label="$t('systemFunction.form.isChild')">
           <el-switch
-            v-model="form.isChild"
+            v-model="formData.isChild"
             active-color="#13ce66"
             inactive-color="#ff4949"
           ></el-switch>
@@ -103,7 +108,7 @@
         <el-form-item :label="$t('systemFunction.form.remark')">
           <el-input
             type="textarea"
-            v-model="form.remark"
+            v-model="formData.remark"
             :autosize="{ minRows: 2 }"
             :placeholder="$t('common.enter') + $t('systemFunction.form.remark')"
           ></el-input>
@@ -135,7 +140,8 @@ export default defineComponent({
   },
   setup(props, context) {
     let { t } = useI18n();
-    let form = ref({
+    let formRef = ref<HTMLElement | null>(null);
+    let formData = reactive({
       liDataName: "",
       liName: "",
       parentGuid: "",
@@ -158,45 +164,49 @@ export default defineComponent({
         immediate: true,
       }
     );
-    //验证账号
-    let validator_required = (rule: any, value: string, callback: any) => {
-      debugger;
-      if (!value) {
-        return callback(new Error(t("common.enter") + t("login." + rule.feid)));
-      }
-      return callback();
-    };
     //登录验证规则
-    let rules = reactive({
-      liDataName: [
-        {
-          validator: validator_required,
-          trigger: "change",
-        },
-      ],
-      liName: [
-        {
-          validator: validator_required,
-          trigger: "change",
-        },
-      ],
-      liIcon: [
-        {
-          validator: validator_required,
-          trigger: "change",
-        },
-      ],
+    let formRules = computed((): any => {
+      return reactive({
+        liDataName: [
+          {
+            required: true,
+            message: t("common.enter") + t("systemFunction.form.liDataName"),
+            trigger: "change",
+          },
+        ],
+        liName: [
+          {
+            required: true,
+            message: t("common.enter") + t("systemFunction.form.liName"),
+            trigger: "change",
+          },
+        ],
+        liIcon: [
+          {
+            required: true,
+            message: t("common.enter") + t("systemFunction.form.liIcon"),
+            trigger: "change",
+          },
+        ],
+      });
     });
+    //关闭
     let onClose = (): void => {
       context.emit("update:formVisible", false);
     };
+    //确定
     let onSave = (): void => {
-      context.emit("update:formVisible", false);
+      (formRef.value as any).validate(async (valid: boolean) => {
+        if (valid) {
+          context.emit("update:formVisible", false);
+        }
+      });
     };
     return {
       show,
-      form,
-      rules,
+      formData,
+      formRef,
+      formRules,
       onClose,
       onSave,
     };
