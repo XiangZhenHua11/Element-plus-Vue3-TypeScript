@@ -15,7 +15,6 @@
   display: none;
 }
 
-
 // to fixed https://github.com/ElemeFE/element/issues/2461
 .el-dialog {
   transform: none;
@@ -39,11 +38,23 @@
 // dropdown
 .el-dropdown-menu {
   a {
-    display: block
+    display: block;
   }
 }
 
 // to fix el-date-picker css style
 .el-range-separator {
   box-sizing: content-box;
+}
+
+//el-col
+[class*="el-col-"] {
+  width: 100%;
+}
+
+//表单标签超长...显示
+.el-form-item__label {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
