@@ -1,37 +1,37 @@
 {
   "language": {
-      "cn": "Chinese", 
-      "en": "English"
-  }, 
+    "cn": "Chinese",
+    "en": "English"
+  },
   "common": {
-      "enter": "Please enter the ", 
-      "select": "Please select the ", 
-      "define": "define", 
-      "cancel": "cancel"
-  }, 
+    "enter": "please enter",
+    "select": "please choose",
+    "define": "determine",
+    "cancel": "cancel"
+  },
   "login": {
-      "title": "Login Form", 
-      "username": "Account", 
-      "password": "Password", 
-      "loginOn": "Sign in", 
-      "passwordRule_length": "The length is between 3 and 5 characters"
-  }, 
+    "title": "system login",
+    "username": "account number",
+    "password": "password",
+    "loginOn": "log in",
+    "passwordRule_length": "The length is between 3 and 5 characters"
+  },
   "systemFunction": {
-      "name": "System Function", 
-      "functionMenu": "Function Catalog", 
-      "form": {
-          "liName": "Function name", 
-          "liDataName": "Name", 
-          "parentGuid": "Parent", 
-          "liHref": "Address", 
-          "orderNum": "Sort number", 
-          "liIcon": "Icon", 
-          "isChild": "Child node", 
-          "isEnable": "Enable", 
-          "remark": "Remark"
-      }
-  }, 
+    "name": "System functions",
+    "functionMenu": "Function catalog",
+    "form": {
+      "liName": "function name",
+      "liDataName": "name",
+      "parentGuid": "Superior",
+      "liHref": "address",
+      "orderNum": "queue number",
+      "liIcon": "icon",
+      "isChild": "Child node",
+      "isEnable": "effective",
+      "remark": "Remarks"
+    }
+  },
   "navbar": {
-      "logout": "Log Out"
+    "logout": "sign out"
   }
 }
