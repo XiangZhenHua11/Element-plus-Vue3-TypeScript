@@ -119,14 +119,14 @@
           :label="$t('systemFunction.form.remark')"
         />
       </el-table>
+      <pagination
+        :total="total"
+        :page="listQuery.page"
+        :limit="listQuery.limit"
+        @pagination="initGrid"
+      />
     </el-main>
   </el-container>
-  <!-- <pagination
-    :total="total"
-    :page="listQuery.page"
-    :limit="listQuery.limit"
-    @pagination="initGrid"
-  /> -->
 </template>
 
 <script lang="ts">

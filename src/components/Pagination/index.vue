@@ -3,6 +3,7 @@
     v-if="!hidden"
     :background="background"
     :current-page="currentPage"
+    :hide-on-single-page="page == 2"
     :page-size="pageSize"
     :layout="layout"
     :page-sizes="pageSizes"

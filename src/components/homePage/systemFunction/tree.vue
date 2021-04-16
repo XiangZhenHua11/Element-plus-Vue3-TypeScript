@@ -50,9 +50,7 @@ export default defineComponent({
       });
       resolve(data);
     };
-    let handleNodeClick = (node: any): void => {
-      
-    };
+    let handleNodeClick = (node: any): void => {};
     return {
       initLazyTree,
       defaultProps,
