@@ -14,6 +14,6 @@ export const removeToken = () => Cookies.remove(tokenKey);
 
 //language
 const languageKey = "xzh_language";
-export const getLanguage = () => Cookies.get(languageKey) || "cn";
+export const getLanguage = () => Cookies.get(languageKey) || "zh";
 export const setLanguage = (language: string) =>
   Cookies.set(languageKey, language);

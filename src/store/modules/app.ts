@@ -38,7 +38,7 @@ const mutations = {
   //设置语言
   TOGGLE_LANGUAGE: (state: app_Inf, language: string) => {
     state.language.current = language;
-    state.language.suffix = language == "cn" ? "" : "_" + language;
+    state.language.suffix = language == "zh" ? "" : "_" + language;
     setLanguage(language);
   },
 };
