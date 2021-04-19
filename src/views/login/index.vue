@@ -105,6 +105,7 @@ export default defineComponent({
     });
     //获取语种数组
     let languageArr = reactive<Array<string>>(I18n.availableLocales);
+    console.log(languageArr);
     //获取当前语言
     let currentLanguage = computed((): string => {
       return I18n.locale.value;
