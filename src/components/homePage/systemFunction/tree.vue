@@ -7,6 +7,8 @@
     lazy
     @node-click="handleNodeClick"
     :expand-on-click-node="false"
+    node-key="guid"
+    :default-expanded-keys="[firstGuid]"
   >
     <template #default="{ data }">
       <span class="custom-tree-node">
@@ -20,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, inject } from "vue";
 import { getLazyTreeData } from "@/api/homePage/systemFunction";
 import store from "@/store";
 
@@ -31,6 +33,9 @@ export default defineComponent({
     showCheckBox: { type: Boolean, default: false },
   },
   setup() {
+    let refreshGrid = <any>inject("refreshGrid");
+    //第一个节点guid
+    let firstGuid = ref<string>("");
     //获取当前语言后缀
     let field = computed(() => {
       return "liName" + store.getters.language.suffix;
@@ -44,18 +49,26 @@ export default defineComponent({
       let guid = !node.data ? "" : node.data.guid;
       const { data } = await getLazyTreeData(guid);
       data.map((item: any) => {
-        //isLeaf false-有子节点 true-无子节点
+        //isLeaf false-有子节点 true-无子节点TEMPLATE
         item.isChild = !item.isChild;
         return item;
       });
+      //第一个节点的guid
+      if (!firstGuid.value) {
+        firstGuid.value = ((data || [])[0] || {}).guid;
+      }
       resolve(data);
     };
-    let handleNodeClick = (node: any): void => {};
+    //数节点点击刷新表格
+    let handleNodeClick = (node: any): void => {
+      refreshGrid(node.guid);
+    };
     return {
       initLazyTree,
       defaultProps,
       handleNodeClick,
       field,
+      firstGuid,
     };
   },
 });

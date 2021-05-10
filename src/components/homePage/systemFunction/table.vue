@@ -46,11 +46,11 @@
     <el-main>
       <el-table
         :data="listData"
-        row-key="id"
         border
         lazy
         ref="tableRef"
         highlight-current-row
+        row-key="guid"
         @current-change="currentChange"
         v-loading="listLoading"
         :load="initChildGrid"
@@ -130,7 +130,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed, watch } from "vue";
+import {
+  defineComponent,
+  ref,
+  reactive,
+  onMounted,
+  nextTick,
+  inject,
+} from "vue";
 import pagination from "@/components/Pagination/index.vue";
 import {
   getLazyMenuTable,
@@ -148,29 +155,29 @@ export default defineComponent({
     formVisible: { type: Boolean, default: false },
     key: String,
   },
-  // emits: {
-  //   updateFormVisible: (payload: any) => {
-  //     return payload.type === "close";
-  //   },
-  // },
-  setup(props, context) {
-    let show = ref(props.formVisible);
+  setup(props) {
+    //父组件修改表单显示
+    let updateFormVisible = <any>inject("updateFormVisible");
+    let tableRef = ref<HTMLElement | null>(null);
+
+    interface A {
+      (key: string): string;
+    }
+    let currentRow = reactive<any>({});
+    //点击行
+    let currentChange = (row: any) => {
+      currentRow = row;
+    };
+    //表格参数
     let listData = ref<any>([]);
     let listLoading = ref<boolean>(true);
     let total = ref<number>(0);
-    let tableRef = ref<HTMLElement | null>(null);
-    let loadNodeMap = ref(new Map());
     let listQuery = ref<any>({
       page: 1, //页数
       limit: 20, //行数
       parentGuid: "", //父节点guid
       liName: "", //功能名称
     });
-    let currentRow = reactive<any>(null);
-    //点击行
-    let currentChange = (row: any) => {
-      currentRow.values = row;
-    };
     //初始化懒加载表格
     let initGrid = async () => {
       listLoading.value = true;
@@ -178,10 +185,22 @@ export default defineComponent({
       listData.value = data.gridData;
       total.value = data.total;
       listLoading.value = false;
+      nextTick(() => {
+        if (!listQuery.value.parentGuid) {
+          //默认展开第一个节点
+          (document.getElementsByClassName(
+            "el-table__expand-icon"
+          )[0] as any).click();
+        }
+      });
       //清空表格选择行
       // tableRef.value.setCurrentRow();
     };
-    initGrid();
+    onMounted(() => {
+      initGrid();
+    });
+    //记录打开的节点
+    let loadNodeMap = ref(new Map());
     //加载子节点
     let initChildGrid = async (tree: any, treeNode: any, resolve: any) => {
       //记录展开的节点
@@ -189,33 +208,43 @@ export default defineComponent({
       var { data } = await getChildMenuTable(tree.guid);
       resolve(data);
     };
+    //刷新表格
+    let refreshGrid = () => {
+      //获取当前行主键
+      var guid: string = currentRow.parentGuid;
+      //判断子/父节点
+      var rootNodeMap = loadNodeMap.value.get(guid) || {};
+      let { tree, treeNode, resolve } = rootNodeMap;
+      //判断刷新表格/父节点
+      Object.keys(rootNodeMap).length > 0
+        ? initChildGrid(tree, treeNode, resolve)
+        : initGrid();
+    };
     //新增form
     let addForm = (): void => {
-      context.emit("update:formVisible", true);
+      updateFormVisible(true);
     };
     //编辑form
     let updateForm = (): void => {
-      debugger;
-      context.emit("update:formVisible", true);
+      updateFormVisible(true);
     };
     //删除form
     let deleteForm = (): void => {
-      debugger;
-      context.emit("update:formVisible", true);
+      updateFormVisible(true);
     };
     return {
+      tableRef,
+      currentChange,
       listData,
       listLoading,
       total,
       listQuery,
       initChildGrid,
       initGrid,
+      refreshGrid,
       addForm,
       updateForm,
       deleteForm,
-      tableRef,
-      currentChange,
-      show,
     };
   },
 });

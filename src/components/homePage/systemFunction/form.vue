@@ -129,18 +129,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed, watch } from "vue";
+import { defineComponent, ref, reactive, computed, watch, inject } from "vue";
 import { saveForm } from "@/api/homePage/systemFunction";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "functionForm",
-  props: {
-    formVisible: { type: Boolean, default: true },
-  },
-  setup(props, context) {
+  setup() {
+    //父组件修改表单显示
+    let updateFormVisible = <any>inject("updateFormVisible");
+    let formVisible = ref(inject("formVisible"));
     let { t } = useI18n();
     let formRef = ref<HTMLElement | null>(null);
+    //表单数据
     let formData = reactive({
       liDataName: "",
       liName: "",
@@ -153,14 +154,15 @@ export default defineComponent({
       remark: "",
       id: "",
     });
-    let show = ref(props.formVisible);
+    let show = ref<boolean>(false);
     //监听路由, 记录路径;
     watch(
-      () => props.formVisible,
+      () => formVisible,
       () => {
-        show.value = props.formVisible;
+        show.value = <boolean>formVisible.value;
       },
       {
+        deep: true,
         immediate: true,
       }
     );
@@ -192,13 +194,14 @@ export default defineComponent({
     });
     //关闭
     let onClose = (): void => {
-      context.emit("update:formVisible", false);
+      updateFormVisible(false);
     };
     //确定
-    let onSave = (): void => {
+    let onSave = async () => {
       (formRef.value as any).validate(async (valid: boolean) => {
         if (valid) {
-          context.emit("update:formVisible", false);
+          var data = await saveForm(formData);
+          updateFormVisible(false);
         }
       });
     };
