@@ -129,20 +129,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed, watch, inject } from "vue";
+import { defineComponent, ref, reactive, computed, inject } from "vue";
 import { saveForm } from "@/api/homePage/systemFunction";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "functionForm",
   setup() {
-    //父组件修改表单显示
-    let updateFormVisible = <any>inject("updateFormVisible");
-    let formVisible = ref(inject("formVisible"));
     let { t } = useI18n();
+    //表格刷新
+    let refreshGrid = <any>inject("refreshGrid");
     let formRef = ref<HTMLElement | null>(null);
     //表单数据
-    let formData = reactive({
+    let formData = ref<any>({
       liDataName: "",
       liName: "",
       parentGuid: "",
@@ -155,17 +154,6 @@ export default defineComponent({
       id: "",
     });
     let show = ref<boolean>(false);
-    //监听路由, 记录路径;
-    watch(
-      () => formVisible,
-      () => {
-        show.value = <boolean>formVisible.value;
-      },
-      {
-        deep: true,
-        immediate: true,
-      }
-    );
     //登录验证规则
     let formRules = computed((): any => {
       return reactive({
@@ -194,14 +182,15 @@ export default defineComponent({
     });
     //关闭
     let onClose = (): void => {
-      updateFormVisible(false);
+      show.value = false;
     };
     //确定
     let onSave = async () => {
       (formRef.value as any).validate(async (valid: boolean) => {
         if (valid) {
-          var data = await saveForm(formData);
-          updateFormVisible(false);
+          await saveForm(formData.value);
+          refreshGrid();
+          show.value = false;
         }
       });
     };

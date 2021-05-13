@@ -143,26 +143,17 @@ import {
   getLazyMenuTable,
   getChildMenuTable,
 } from "@/api/homePage/systemFunction";
-import store from "@/store";
 
 export default defineComponent({
   name: "functionTable",
   components: {
     pagination,
   },
-  props: {
-    //表单显示状态
-    formVisible: { type: Boolean, default: false },
-    key: String,
-  },
-  setup(props) {
-    //父组件修改表单显示
-    let updateFormVisible = <any>inject("updateFormVisible");
+  setup() {
+    //父组件修改表单信息
+    let updateFormInfo = <any>inject("updateFormInfo");
     let tableRef = ref<HTMLElement | null>(null);
-
-    interface A {
-      (key: string): string;
-    }
+    //当前选中行
     let currentRow = reactive<any>({});
     //点击行
     let currentChange = (row: any) => {
@@ -193,8 +184,6 @@ export default defineComponent({
           )[0] as any).click();
         }
       });
-      //清空表格选择行
-      // tableRef.value.setCurrentRow();
     };
     onMounted(() => {
       initGrid();
@@ -219,18 +208,20 @@ export default defineComponent({
       Object.keys(rootNodeMap).length > 0
         ? initChildGrid(tree, treeNode, resolve)
         : initGrid();
+      //清空表格选择行
+      currentRow = {};
     };
     //新增form
     let addForm = (): void => {
-      updateFormVisible(true);
+      updateFormInfo(true);
     };
     //编辑form
     let updateForm = (): void => {
-      updateFormVisible(true);
+      updateFormInfo(true, currentRow);
     };
     //删除form
     let deleteForm = (): void => {
-      updateFormVisible(true);
+      updateFormInfo(true);
     };
     return {
       tableRef,

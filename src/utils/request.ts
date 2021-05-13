@@ -39,10 +39,11 @@ service.interceptors.response.use(
         type: "error",
         duration: 5 * 1000,
       });
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      // 50008:token非法；50012:其他客户端登录；401:token过期；
+      if (res.code === 50008 || res.code === 50012 || res.code === 401) {
         ElMessageBox.confirm(
-          "You have been logged out, try to login again.",
-          "Log out",
+          "您已注销，您可以取消停留在该页上，或重新登录",
+          "确认注销",
           {
             confirmButtonText: "Relogin",
             cancelButtonText: "Cancel",
