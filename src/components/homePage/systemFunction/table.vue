@@ -21,7 +21,7 @@
             icon="el-icon-plus"
             round
             plain
-            @click="addForm"
+            @click="addForm_btn"
           ></el-button>
           <el-button
             type="primary"
@@ -29,7 +29,7 @@
             icon="el-icon-edit"
             round
             plain
-            @click="updateForm"
+            @click="updateForm_btn"
           ></el-button>
           <el-button
             type="primary"
@@ -37,7 +37,7 @@
             icon="el-icon-delete"
             round
             plain
-            @click="deleteForm"
+            @click="deleteForm_btn"
           ></el-button>
         </el-button-group>
       </el-form>
@@ -134,6 +134,7 @@ import {
   defineComponent,
   ref,
   reactive,
+  toRefs,
   onMounted,
   nextTick,
   inject,
@@ -142,7 +143,9 @@ import pagination from "@/components/Pagination/index.vue";
 import {
   getLazyMenuTable,
   getChildMenuTable,
+  deleteForm,
 } from "@/api/homePage/systemFunction";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "functionTable",
@@ -154,10 +157,22 @@ export default defineComponent({
     let updateFormInfo = <any>inject("updateFormInfo");
     let tableRef = ref<HTMLElement | null>(null);
     //当前选中行
-    let currentRow = reactive<any>({});
+    let currentRow = reactive<any>(null);
     //点击行
     let currentChange = (row: any) => {
       currentRow = row;
+    };
+    //判断是否选中行
+    let checkCurrentRrow = () => {
+      if (!currentRow) {
+        ElMessage({
+          showClose: true,
+          message: "您没有选中任何数据项,请选中后再操作!",
+          type: "warning",
+        });
+        return false;
+      }
+      return true;
     };
     //表格参数
     let listData = ref<any>([]);
@@ -185,9 +200,6 @@ export default defineComponent({
         }
       });
     };
-    onMounted(() => {
-      initGrid();
-    });
     //记录打开的节点
     let loadNodeMap = ref(new Map());
     //加载子节点
@@ -200,28 +212,39 @@ export default defineComponent({
     //刷新表格
     let refreshGrid = () => {
       //获取当前行主键
-      var guid: string = currentRow.parentGuid;
+      var guid: string = (currentRow || {}).parentGuid;
       //判断子/父节点
-      var rootNodeMap = loadNodeMap.value.get(guid) || {};
-      let { tree, treeNode, resolve } = rootNodeMap;
+      var rootNodeMap = loadNodeMap.value.get(guid);
+      let { tree, treeNode, resolve } = rootNodeMap || {};
       //判断刷新表格/父节点
-      Object.keys(rootNodeMap).length > 0
-        ? initChildGrid(tree, treeNode, resolve)
-        : initGrid();
+      !!rootNodeMap ? initChildGrid(tree, treeNode, resolve) : initGrid();
       //清空表格选择行
-      currentRow = {};
+      currentRow = null;
     };
+    onMounted(() => {
+      initGrid();
+    });
     //新增form
-    let addForm = (): void => {
+    let addForm_btn = (): void => {
       updateFormInfo(true);
     };
     //编辑form
-    let updateForm = (): void => {
-      updateFormInfo(true, currentRow);
+    let updateForm_btn = (): void => {
+      if (checkCurrentRrow()) {
+        updateFormInfo(true, currentRow);
+      }
     };
     //删除form
-    let deleteForm = (): void => {
-      updateFormInfo(true);
+    let deleteForm_btn = async () => {
+      if (checkCurrentRrow()) {
+        await deleteForm(currentRow.id);
+        ElMessage({
+          message: "操作成功!",
+          type: "success",
+        });
+        //刷新表格
+        refreshGrid();
+      }
     };
     return {
       tableRef,
@@ -233,9 +256,9 @@ export default defineComponent({
       initChildGrid,
       initGrid,
       refreshGrid,
-      addForm,
-      updateForm,
-      deleteForm,
+      addForm_btn,
+      updateForm_btn,
+      deleteForm_btn,
     };
   },
 });

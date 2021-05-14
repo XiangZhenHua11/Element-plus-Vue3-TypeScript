@@ -132,6 +132,7 @@
 import { defineComponent, ref, reactive, computed, inject } from "vue";
 import { saveForm } from "@/api/homePage/systemFunction";
 import { useI18n } from "vue-i18n";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "functionForm",
@@ -189,6 +190,10 @@ export default defineComponent({
       (formRef.value as any).validate(async (valid: boolean) => {
         if (valid) {
           await saveForm(formData.value);
+          ElMessage({
+            message: "操作成功!",
+            type: "success",
+          });
           refreshGrid();
           show.value = false;
         }
