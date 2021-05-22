@@ -186,19 +186,22 @@ export default defineComponent({
     });
     //初始化懒加载表格
     let initGrid = async () => {
-      listLoading.value = true;
-      let { data } = await getLazyMenuTable(listQuery.value);
-      listData.value = data.gridData;
-      total.value = data.total;
-      listLoading.value = false;
-      nextTick(() => {
-        if (!listQuery.value.parentGuid) {
-          //默认展开第一个节点
-          (document.getElementsByClassName(
-            "el-table__expand-icon"
-          )[0] as any).click();
-        }
-      });
+      try {
+        listLoading.value = true;
+        let { data } = await getLazyMenuTable(listQuery.value);
+        listData.value = data.gridData;
+        total.value = data.total;
+        nextTick(() => {
+          if (!listQuery.value.parentGuid) {
+            //默认展开第一个节点
+            (document.getElementsByClassName(
+              "el-table__expand-icon"
+            )[0] as any).click();
+          }
+        });
+      } finally {
+        listLoading.value = false;
+      }
     };
     //记录打开的节点
     let loadNodeMap = ref(new Map());
