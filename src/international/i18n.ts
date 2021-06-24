@@ -1,5 +1,5 @@
 import { createI18n } from "vue-i18n";
-import { getLanguage } from "@/utils/cookies";
+import { getLanguage } from "@/utils/cache/cookies";
 import lang_cn from "element-plus/lib/locale/lang/zh-cn";
 import lang_en from "element-plus/lib/locale/lang/en";
 //注册并引入语言文件

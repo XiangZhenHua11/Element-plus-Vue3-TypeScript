@@ -1,3 +1,8 @@
+<!--
+ * @Descripttion: 
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-06-24 11:43:23
+-->
 <template>
   <div :class="classObj" class="app-wrapper">
     <!-- 手机模式-遮盖层 -->
@@ -22,7 +27,11 @@ export default defineComponent({
   name: "Layout",
   setup() {
     let sidebar = store.getters.sidebar;
-    //获取不同模式状态
+    /**
+     * @Author: xzh
+     * @Descripttion:获取不同模式状态
+     * @Param:
+     */
     let classObj = computed((): any => {
       return {
         hideSidebar: !sidebar.opened,
@@ -30,7 +39,12 @@ export default defineComponent({
         mobile: false,
       };
     });
-    //手机模式-点击遮盖层收起菜单
+    /**
+     * @Author: xzh
+     * @Descripttion:手机模式-点击遮盖层收起菜单
+     * @Param:
+     * @param {*} void
+     */
     let handleClickOutside = (): void => {
       store.dispatch("app/toggleSideBar");
     };

@@ -1,3 +1,8 @@
+<!--
+ * @Descripttion: 
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-06-24 11:42:53
+-->
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
@@ -49,7 +54,11 @@ export default defineComponent({
     });
     //scss变量
     let variableArr = reactive(variables);
-    //获取路由设置默认选择菜单
+    /**
+     * @Author: xzh
+     * @Descripttion:获取路由设置默认选择菜单
+     * @Param:
+     */
     let activeMenu = computed((): string => {
       const { meta, name } = router.currentRoute.value;
       if (!!meta.activeMenu) {
@@ -57,6 +66,11 @@ export default defineComponent({
       }
       return <string>name;
     });
+    /**
+     * @Author: xzh
+     * @Descripttion:是否收缩
+     * @Param:
+     */
     let isCollapse = computed((): boolean => {
       return !store.getters.sidebar.opened;
     });

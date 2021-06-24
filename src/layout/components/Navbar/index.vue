@@ -1,3 +1,8 @@
+<!--
+ * @Descripttion: 首页工具栏
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-06-24 11:38:25
+-->
 <template>
   <div class="navbar">
     <!-- 收缩/展开 -->
@@ -68,24 +73,45 @@ export default defineComponent({
     const I18n = useI18n();
     //获取语种数组
     let languageArr = reactive<Array<string>>(I18n.availableLocales);
-    //获取当前语言
+    /**
+     * @Author: xzh
+     * @Descripttion: 获取当前语言
+     * @Param:
+     */
     let currentLanguage = computed((): string => {
       return I18n.locale.value;
     });
-    //获取菜单展开/收起状态
+    /**
+     * @Author: xzh
+     * @Descripttion:获取菜单展开/收起状态
+     * @Param:
+     */
     let menuState = computed((): boolean => {
       return store.getters.sidebar.opened;
     });
-    //退出登录
+    /**
+     * @Author: xzh
+     * @Descripttion:退出登录
+     * @Param:
+     */
     let logout = async () => {
       await store.dispatch("user/logout");
       router.push(`/login?redirect=${router.currentRoute.value.fullPath}`);
     };
-    //切换菜单收起/展开状态
+    /**
+     * @Author: xzh
+     * @Descripttion:切换菜单收起/展开状态
+     * @Param:
+     */
     let toggleSideBar = () => {
       store.dispatch("app/toggleSideBar");
     };
-    //切换语言
+    /**
+     * @Author: xzh
+     * @Descripttion:切换语言
+     * @Param:
+     * @param {*} item
+     */
     let changeLanguage = (item: string) => {
       I18n.locale.value = item;
       store.dispatch("app/toggleLanguage", item);

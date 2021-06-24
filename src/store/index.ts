@@ -1,12 +1,12 @@
 /*
  * @Descripttion:
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 11:17:02
+ * @LastEditTime: 2021-06-24 11:31:03
  */
 import { createStore } from "vuex";
-import user from "./modules/user";
+import user from "./modules/app/user";
 import app from "./modules/app";
-import permission from "./modules/permission";
+import permission from "./modules/router/permission";
 import getters from "./getters";
 import createPersistedState from "vuex-persistedstate";
 

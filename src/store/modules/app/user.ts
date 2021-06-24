@@ -1,5 +1,10 @@
+/*
+ * @Descripttion:
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-06-24 11:40:59
+ */
 import router from "@/router/index";
-import { getToken, setToken, removeToken } from "@/utils/cookies";
+import { getToken, setToken, removeToken } from "@/utils/cache/cookies";
 import { login, logout, getUserInfo } from "@/api/app/users";
 
 const getDefaultState = () => {
@@ -32,7 +37,11 @@ const mutations = {
   },
 };
 const actions = {
-  // 登录
+  /**
+   * @Author: xzh
+   * @Descripttion:登录
+   * @Param:
+   */
   async login(
     { commit }: any,
     userInfo: { username: string; password: string }
@@ -44,7 +53,12 @@ const actions = {
     return Promise.resolve(true);
   },
 
-  // 根据token获取用户信息
+  /**
+   * @Author: xzh
+   * @Descripttion:根据token获取用户信息
+   * @Param:
+   * @param {any} param1
+   */
   async getInfo({ commit, state }: any) {
     const { data } = await getUserInfo(state.token);
     const { userName, headImg } = data;
@@ -52,8 +66,12 @@ const actions = {
     commit("SET_HEADIMG", headImg); // 头像地址
     return Promise.resolve(data);
   },
-
-  // 退出登录
+  /**
+   * @Author: xzh
+   * @Descripttion:退出登录
+   * @Param:
+   * @param {any} param1
+   */
   async logout({ commit, state }: any) {
     await logout();
     removeToken();
@@ -61,7 +79,12 @@ const actions = {
     router.push("/login");
     return Promise.resolve(true);
   },
-  // remove token
+  /**
+   * @Author: xzh
+   * @Descripttion:移除token
+   * @Param:
+   * @param {any} param1
+   */
   resetToken({ commit }: any) {
     removeToken(); // must remove  token  first
     commit("RESET_STATE");

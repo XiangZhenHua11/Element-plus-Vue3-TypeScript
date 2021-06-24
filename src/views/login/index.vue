@@ -78,7 +78,12 @@ export default defineComponent({
       username: "system",
       password: "wwww",
     });
-    //登录验证规则
+    /**
+     * @Author: xzh
+     * @Descripttion:登录验证规则
+     * @Param:
+     * @param {*} computed
+     */
     let loginRules = computed((): any => {
       return reactive({
         username: [
@@ -105,16 +110,32 @@ export default defineComponent({
     });
     //获取语种数组
     let languageArr = reactive<Array<string>>(I18n.availableLocales);
-    //获取当前语言
+    /**
+     * @Author: xzh
+     * @Descripttion: 获取当前语言
+     * @Param:
+     * @param {*} computed
+     */
     let currentLanguage = computed((): string => {
       return I18n.locale.value;
     });
-    //切换语言
+    /**
+     * @Author: xzh
+     * @Descripttion:切换语言
+     * @Param:
+     * @param {*} item
+     */
+
     let changeLanguage = (item: string) => {
       I18n.locale.value = item;
       store.dispatch("app/toggleLanguage", item);
     };
-    //获取路由其他参数
+    /**
+     * @Author: xzh
+     * @Descripttion: 获取路由其他参数
+     * @Param:
+     * @param {*} query
+     */
     let getOtherQuery = (query: any): any => {
       return Object.keys(query).reduce((acc, cur) => {
         if (cur !== "redirect") {
@@ -123,7 +144,11 @@ export default defineComponent({
         return acc;
       }, {} as any);
     };
-    //监听路由,记录路径
+    /**
+     * @Author: xzh
+     * @Descripttion:监听路由,记录路径
+     * @Param:
+     */
     watch(
       () => router,
       (route) => {
@@ -135,7 +160,12 @@ export default defineComponent({
         immediate: true,
       }
     );
-    //登录
+    /**
+     * @Author: xzh
+     * @Descripttion: 登录
+     * @Param:
+     */
+
     let loginOn = (): void => {
       (loginFormRef.value as any).validate(async (valid: boolean) => {
         if (valid) {

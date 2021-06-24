@@ -31,7 +31,10 @@ interface routerMenu_Inf {
   redirect?: string;
 }
 /**
- * 后台查询的菜单数据拼装成路由格式的数据
+ * @Author: xzh
+ * @Descripttion:后台查询的菜单数据拼装成路由格式的数据
+ * @Param:
+ * @param {any} data
  */
 const generaMenu = (data: any) => {
   // 按照排序进行排序
@@ -78,8 +81,13 @@ const generaMenu = (data: any) => {
   // menuArr.push({ path: "*", redirect: "/404", meta: { hidden: true }});
   return menuArr;
 };
-
-// 获取菜单子节点数据
+/**
+ * @Author: xzh
+ * @Descripttion:获取菜单子节点数据
+ * @Param:
+ * @param {routerMenu_Inf} menu
+ * @param {Array} data
+ */
 function joinChildMemu(menu: routerMenu_Inf, data: Array<any>) {
   const rootMenu = data.filter(
     (x: resData_Inf) => x.parentGuid === menu.meta.id && x.isEnable === true
@@ -129,17 +137,34 @@ const state: state = {
 };
 
 const mutations = {
-  //设置路由
+  /**
+   * @Author: xzh
+   * @Descripttion:设置路由
+   * @Param:
+   * @param {state} state
+   * @param {Array} routes
+   */
   SET_ROUTES: (state: state, routes: Array<any>) => {
     state.addRoutes = routes;
     state.routes = router.getRoutes().concat(routes);
   },
-  //设置菜单
+  /**
+   * @Author: xzh
+   * @Descripttion:设置菜单
+   * @Param:
+   * @param {state} state
+   * @param {Array} sidmenuArr
+   */
   SET_SIDEMENU: (state: state, sidmenuArr: Array<resData_Inf>) => {
     state.sidmenuArr = sidmenuArr;
   },
 };
 const actions = {
+  /**
+   * @Author: xzh
+   * @Descripttion:格式化菜单
+   * @Param:
+   */
   async generateRoutes({ commit }: any) {
     // 获取菜单数据,把数据添加到路由
     const { data } = await loadSideMenu();

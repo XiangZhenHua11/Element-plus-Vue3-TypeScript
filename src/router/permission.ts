@@ -4,7 +4,7 @@ import "nprogress/nprogress.css";
 import { ElMessage } from "element-plus";
 import store from "@/store";
 import { RouteRecordRaw } from "vue-router";
-import { getLanguage } from "@/utils/cookies";
+import { getLanguage } from "@/utils/cache/cookies";
 
 NProgress.configure({ showSpinner: false });
 
