@@ -1,3 +1,8 @@
+<!--
+ * @Descripttion: 
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-06-24 11:19:12
+-->
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
@@ -43,7 +48,12 @@ export default defineComponent({
         return matched;
       }
     );
-    //判断是否为主页
+    /**
+     * @Author: xzh
+     * @Descripttion:判断是否为主页
+     * @Param:
+     * @param {*} route
+     */
     let isConsole = (route: RouteRecordRaw) => {
       let name = <string>route.name;
       if (!name) {
