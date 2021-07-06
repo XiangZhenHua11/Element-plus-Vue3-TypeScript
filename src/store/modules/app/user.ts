@@ -1,38 +1,32 @@
 /*
  * @Descripttion:
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 11:40:59
+ * @LastEditTime: 2021-07-05 11:51:32
  */
 import router from "@/router/index";
 import { getToken, setToken, removeToken } from "@/utils/cache/cookies";
 import { login, logout, getUserInfo } from "@/api/app/users";
+import { userStroe_Inf, user_Inf } from "./user.d";
 
-const getDefaultState = () => {
+const getDefaultState = (): userStroe_Inf => {
   return {
     token: getToken(),
-    name: "",
-    headImg: "",
+    userInfo: {
+      name: "",
+      headImg: "",
+    },
   };
 };
-interface state {
-  token: string;
-  name: string;
-  headImg: string;
-}
-
 const state = getDefaultState();
 
 const mutations = {
-  SET_TOKEN: (state: state, token: string) => {
+  SET_TOKEN: (state: userStroe_Inf, token: string) => {
     state.token = token;
   },
-  SET_HEADIMG: (state: state, headImg: string) => {
-    state.headImg = headImg;
+  SET_USERINFO: (state: userStroe_Inf, userInfo: any) => {
+    Object.assign(state.userInfo, userInfo);
   },
-  SET_NAME: (state: state, name: string) => {
-    state.name = name;
-  },
-  RESET_STATE: (state: state) => {
+  RESET_STATE: (state: userStroe_Inf) => {
     Object.assign(state, getDefaultState());
   },
 };
@@ -42,10 +36,7 @@ const actions = {
    * @Descripttion:登录
    * @Param:
    */
-  async login(
-    { commit }: any,
-    userInfo: { username: string; password: string }
-  ) {
+  async login({ commit }: any, userInfo: user_Inf) {
     const { username, password } = userInfo;
     const { data } = await login({ username, password });
     commit("SET_TOKEN", data.token);
@@ -59,11 +50,13 @@ const actions = {
    * @Param:
    * @param {any} param1
    */
-  async getInfo({ commit, state }: any) {
+  async getUserInfo({ commit, state }: any) {
     const { data } = await getUserInfo(state.token);
     const { userName, headImg } = data;
-    commit("SET_NAME", userName); // 用户名
-    commit("SET_HEADIMG", headImg); // 头像地址
+    commit("SET_USERINFO", {
+      userName,
+      headImg,
+    });
     return Promise.resolve(data);
   },
   /**

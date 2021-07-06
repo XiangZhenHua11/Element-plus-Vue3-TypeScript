@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 首页工具栏
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 11:38:25
+ * @LastEditTime: 2021-06-24 16:46:58
 -->
 <template>
   <div class="navbar">
@@ -48,7 +48,7 @@
             ></el-avatar>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item divided @click="logout">
+                <el-dropdown-item divided @click="handleLogout">
                   <span style="display: block"> {{ $t("navbar.logout") }}</span>
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -61,10 +61,11 @@
 </template>
 <script lang="ts">
 import { defineComponent, computed, reactive } from "vue";
-import store from "@/store";
 import { useRouter } from "vue-router";
-import Breadcrumb from "@/components/breadcrumb/index.vue";
 import { useI18n } from "vue-i18n";
+import { toggleSideBar, toggleLanguage, sidebar } from "@storeAction/app";
+import { logout } from "@storeAction/app/user";
+import Breadcrumb from "@/components/breadcrumb/index.vue";
 export default defineComponent({
   name: "console",
   components: { Breadcrumb },
@@ -87,24 +88,16 @@ export default defineComponent({
      * @Param:
      */
     let menuState = computed((): boolean => {
-      return store.getters.sidebar.opened;
+      return sidebar.opened;
     });
     /**
      * @Author: xzh
      * @Descripttion:退出登录
      * @Param:
      */
-    let logout = async () => {
-      await store.dispatch("user/logout");
+    let handleLogout = async () => {
+      await logout();
       router.push(`/login?redirect=${router.currentRoute.value.fullPath}`);
-    };
-    /**
-     * @Author: xzh
-     * @Descripttion:切换菜单收起/展开状态
-     * @Param:
-     */
-    let toggleSideBar = () => {
-      store.dispatch("app/toggleSideBar");
     };
     /**
      * @Author: xzh
@@ -112,12 +105,12 @@ export default defineComponent({
      * @Param:
      * @param {*} item
      */
-    let changeLanguage = (item: string) => {
-      I18n.locale.value = item;
-      store.dispatch("app/toggleLanguage", item);
+    let changeLanguage = (language: string) => {
+      I18n.locale.value = language;
+      toggleLanguage(language);
     };
     return {
-      logout,
+      handleLogout,
       toggleSideBar,
       menuState,
       languageArr,

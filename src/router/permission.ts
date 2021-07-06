@@ -1,10 +1,21 @@
+/*
+ * @Descripttion:
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-06-24 17:30:28
+ */
 import router from "@/router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { ElMessage } from "element-plus";
 import store from "@/store";
+import {
+  token,
+  userInfo,
+  getUserInfo,
+  resetToken,
+} from "@storeAction/app/user";
+import { generateRoutes } from "@storeAction/permission";
 import { RouteRecordRaw } from "vue-router";
-import { getLanguage } from "@/utils/cache/cookies";
 
 NProgress.configure({ showSpinner: false });
 
@@ -15,25 +26,22 @@ router.beforeEach(async (to: any, _: any, next: any) => {
   NProgress.start();
 
   // Determine whether the user has logged in
-  if (store.getters.token) {
+  if (!!token) {
     if (to.path === "/login") {
       // If is logged in, redirect to the home page
       next({ path: "/" });
       NProgress.done();
     } else {
-      const hasGetUserInfo = store.getters.name;
+      const hasGetUserInfo = (userInfo || {}).name;
       if (hasGetUserInfo) {
         next();
       } else {
         try {
           // 获取用户信息
-          const { account } = await store.dispatch("user/getInfo");
+          const { account } = await getUserInfo();
 
           // 基于角色生成可访问路由图
-          const accessRoutes = await store.dispatch(
-            "permission/generateRoutes",
-            account
-          );
+          const accessRoutes = await generateRoutes(account);
           accessRoutes.forEach((item: RouteRecordRaw) => {
             // 动态添加可访问路由
             router.addRoute(item);
@@ -42,7 +50,7 @@ router.beforeEach(async (to: any, _: any, next: any) => {
           next({ ...to, replace: true });
         } catch (error) {
           // 删除token并转到登录页面重新登录
-          await store.dispatch("user/resetToken");
+          await resetToken();
           ElMessage.error(error || "Has Error");
           next(`/login?redirect=${to.path}`);
           NProgress.done();

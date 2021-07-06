@@ -17,7 +17,9 @@
     "paths": {
       "@/*": [
         "src/*"
-      ]
+      ],
+      "@store/*": ["src/store/modules/*"],
+      "@storeAction/*": ["src/utils/cache/store/*"],
     },
     "lib": [
       "esnext",

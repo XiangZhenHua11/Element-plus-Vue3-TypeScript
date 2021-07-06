@@ -61,7 +61,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, reactive, watch, computed } from "vue";
-import store from "@/store";
+import { toggleLanguage } from "@storeAction/app/index";
+import { login } from "@storeAction/app/user";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 export default defineComponent({
@@ -128,7 +129,7 @@ export default defineComponent({
 
     let changeLanguage = (item: string) => {
       I18n.locale.value = item;
-      store.dispatch("app/toggleLanguage", item);
+      toggleLanguage(item);
     };
     /**
      * @Author: xzh
@@ -171,7 +172,7 @@ export default defineComponent({
         if (valid) {
           try {
             loading.value = true;
-            await store.dispatch("user/login", loginForm);
+            await login(loginForm);
             router.push({
               path: redirect.value || "/",
               query: otherQuery.value,

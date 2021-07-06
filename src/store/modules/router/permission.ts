@@ -1,42 +1,14 @@
 import router from "@/router";
 import { loadSideMenu } from "@/api/app/home";
 import Layout from "@/layout/index.vue";
-
-interface state {
-  routes: Array<any>;
-  addRoutes: Array<any>;
-  sidmenuArr: Array<resData_Inf>;
-}
-//返回数据类型接口
-interface resData_Inf {
-  id: string; //主键
-  guid: string; //唯一主键
-  parentGuid: string; //父节点主键
-  liName: string; //节点名称
-  liName_en: string; //节点名称
-  liDataName: string; //节点数据名称
-  liIcon: string; //节点图标
-  isChild: boolean; //是否有子级
-  isEnable: boolean; //是否有效
-  element_liHref: string; //节点地址
-}
-//路由节点接口
-interface routerMenu_Inf {
-  path?: string;
-  component?: any;
-  guid?: string;
-  name?: string;
-  children: Array<any>;
-  meta?: any;
-  redirect?: string;
-}
+import { state_Inf, resData_Inf, routerMenu_Inf } from "./permission.d";
 /**
  * @Author: xzh
  * @Descripttion:后台查询的菜单数据拼装成路由格式的数据
  * @Param:
  * @param {any} data
  */
-const generaMenu = (data: any) => {
+const generaMenu = (data: any): Array<routerMenu_Inf> => {
   // 按照排序进行排序
   data = data.sort();
   // 查询根节点
@@ -44,7 +16,7 @@ const generaMenu = (data: any) => {
     (x: resData_Inf) =>
       x.isChild === true && x.parentGuid === null && x.isEnable === true
   );
-  var menuArr: Array<any> = [];
+  var menuArr: Array<routerMenu_Inf> = [];
   rootMenu.forEach((item: resData_Inf) => {
     const menu: routerMenu_Inf = {
       path:
@@ -130,7 +102,7 @@ function joinChildMemu(menu: routerMenu_Inf, data: Array<any>) {
   return childMenuArr;
 }
 
-const state: state = {
+const state: state_Inf = {
   routes: [],
   addRoutes: [],
   sidmenuArr: [],
@@ -144,7 +116,7 @@ const mutations = {
    * @param {state} state
    * @param {Array} routes
    */
-  SET_ROUTES: (state: state, routes: Array<any>) => {
+  SET_ROUTES: (state: state_Inf, routes: Array<any>) => {
     state.addRoutes = routes;
     state.routes = router.getRoutes().concat(routes);
   },
@@ -155,7 +127,7 @@ const mutations = {
    * @param {state} state
    * @param {Array} sidmenuArr
    */
-  SET_SIDEMENU: (state: state, sidmenuArr: Array<resData_Inf>) => {
+  SET_SIDEMENU: (state: state_Inf, sidmenuArr: Array<resData_Inf>) => {
     state.sidmenuArr = sidmenuArr;
   },
 };
@@ -169,7 +141,7 @@ const actions = {
     // 获取菜单数据,把数据添加到路由
     const { data } = await loadSideMenu();
     // 获取格式化后菜单数据
-    var routMenu = generaMenu(data);
+    var routMenu: Array<routerMenu_Inf> = generaMenu(data);
     commit("SET_ROUTES", routMenu);
     commit("SET_SIDEMENU", routMenu);
     return Promise.resolve(routMenu);

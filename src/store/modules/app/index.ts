@@ -1,35 +1,18 @@
 /*
  * @Descripttion:
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 11:42:11
+ * @LastEditTime: 2021-06-24 15:20:41
  */
-import {
-  getLanguage,
-  setLanguage,
-  setSidebarStatus,
-  getSidebarStatus,
-} from "@/utils/cache/cookies";
+import { setSidebarStatus, getSidebarStatus } from "@/utils/cache/cookies";
+import { app_Inf } from "./index.d";
 
-interface app_Inf {
-  sidebar: sidebar_Inf; //菜单
-  language: language_Inf; //语言
-}
-//菜单接口
-interface sidebar_Inf {
-  opened: boolean;
-}
-//语言接口
-interface language_Inf {
-  current: string;
-  suffix: string;
-}
 const state: app_Inf = {
   sidebar: {
     opened: !!eval(<string>getSidebarStatus() || "true") ? true : false,
   },
   language: {
     //当前语言
-    current: getLanguage(),
+    current: "zh",
     //后缀
     suffix: "",
   },
@@ -55,7 +38,6 @@ const mutations = {
   TOGGLE_LANGUAGE: (state: app_Inf, language: string) => {
     state.language.current = language;
     state.language.suffix = language == "zh" ? "" : "_" + language;
-    setLanguage(language);
   },
 };
 const actions = {

@@ -1,7 +1,7 @@
 /*
  * @Descripttion:
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 11:32:39
+ * @LastEditTime: 2021-06-24 14:05:07
  */
 import Cookies from "js-cookie";
 
@@ -14,16 +14,6 @@ const tokenKey = "xzh_token";
 export const getToken = () => Cookies.get(tokenKey) || "";
 export const setToken = (token: string) => Cookies.set(tokenKey, token);
 export const removeToken = () => Cookies.remove(tokenKey);
-
-/**
- * @Author: xzh
- * @Descripttion:语言
- * @Param:
- */
-const languageKey = "xzh_language";
-export const getLanguage = () => Cookies.get(languageKey) || "zh";
-export const setLanguage = (language: string) =>
-  Cookies.set(languageKey, language);
 
 /**
  * @Author: xzh

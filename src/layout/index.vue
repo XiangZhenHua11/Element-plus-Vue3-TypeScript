@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 11:43:23
+ * @LastEditTime: 2021-07-05 11:58:22
 -->
 <template>
   <div :class="classObj" class="app-wrapper">
@@ -21,12 +21,16 @@
 
 <script lang="ts">
 import { AppMain, Sidebar, Navbar } from "./components";
-import store from "@/store";
+import { sidebar, toggleSideBar } from "@storeAction/app/index";
 import { defineComponent, computed } from "vue";
 export default defineComponent({
   name: "Layout",
+  components: {
+    Sidebar,
+    AppMain,
+    Navbar,
+  },
   setup() {
-    let sidebar = store.getters.sidebar;
     /**
      * @Author: xzh
      * @Descripttion:获取不同模式状态
@@ -46,18 +50,13 @@ export default defineComponent({
      * @param {*} void
      */
     let handleClickOutside = (): void => {
-      store.dispatch("app/toggleSideBar");
+      toggleSideBar();
     };
     return {
       classObj,
       sidebar,
       handleClickOutside,
     };
-  },
-  components: {
-    Sidebar,
-    AppMain,
-    Navbar,
   },
 });
 </script>
