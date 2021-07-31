@@ -1,10 +1,15 @@
+/*
+ * @Descripttion:
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-07-31 17:44:48
+ */
 import { createI18n } from "vue-i18n";
-import { getLanguage } from "@/utils/cache/cookies";
+import storeAction_app from "@storeAction/app";
 import lang_cn from "element-plus/lib/locale/lang/zh-cn";
 import lang_en from "element-plus/lib/locale/lang/en";
 //注册并引入语言文件
 const i18n = createI18n({
-  locale: getLanguage(),
+  locale: storeAction_app.getLanguage().current,
   messages: {
     zh: {
       ...require("./language/zh-cn.json"),

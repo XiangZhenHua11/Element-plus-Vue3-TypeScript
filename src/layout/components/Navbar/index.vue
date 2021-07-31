@@ -1,12 +1,12 @@
 <!--
  * @Descripttion: 首页工具栏
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 16:46:58
+ * @LastEditTime: 2021-07-31 17:46:29
 -->
 <template>
   <div class="navbar">
     <!-- 收缩/展开 -->
-    <span class="hamburger-container" @click="toggleSideBar">
+    <span class="hamburger-container" @click="storeAction_app.toggleSideBar">
       <i
         :class="['iconfont', 'icon-' + (menuState ? 'menuOpen' : 'menuClose')]"
       ></i>
@@ -63,11 +63,11 @@
 import { defineComponent, computed, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { toggleSideBar, toggleLanguage, sidebar } from "@storeAction/app";
-import { logout } from "@storeAction/app/user";
+import storeAction_app from "@storeAction/app";
+import storeAction_user from "@storeAction/app/user";
 import Breadcrumb from "@/components/breadcrumb/index.vue";
 export default defineComponent({
-  name: "console",
+  name: "navbar",
   components: { Breadcrumb },
   setup() {
     let router = useRouter();
@@ -88,7 +88,7 @@ export default defineComponent({
      * @Param:
      */
     let menuState = computed((): boolean => {
-      return sidebar.opened;
+      return storeAction_app.getSidebar().opened;
     });
     /**
      * @Author: xzh
@@ -96,22 +96,22 @@ export default defineComponent({
      * @Param:
      */
     let handleLogout = async () => {
-      await logout();
+      await storeAction_user.logout();
       router.push(`/login?redirect=${router.currentRoute.value.fullPath}`);
     };
     /**
      * @Author: xzh
      * @Descripttion:切换语言
      * @Param:
-     * @param {*} item
+     * @param {*} language
      */
     let changeLanguage = (language: string) => {
       I18n.locale.value = language;
-      toggleLanguage(language);
+      storeAction_app.toggleLanguage(language);
     };
     return {
       handleLogout,
-      toggleSideBar,
+      storeAction_app,
       menuState,
       languageArr,
       currentLanguage,

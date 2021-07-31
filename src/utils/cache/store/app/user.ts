@@ -1,60 +1,61 @@
 /*
  * @Descripttion:用户store统一操作
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-05 11:55:24
+ * @LastEditTime: 2021-07-31 18:20:33
  */
 import store from "@/store";
 import { user_Inf } from "@/store/modules/app/user.d";
 /**
  * @Author: xzh
- * @Descripttion:用户信息
+ * @Descripttion:用户store统一操作类
  * @Param:
  */
-export const userInfo: user_Inf = store.getters.userInfo;
-/**
- * @Author: xzh
- * @Descripttion:token
- * @Param:
- */
-export const token: string = store.getters.token;
-/**
- * @Author: xzh
- * @Descripttion:获取token
- * @Param:
- */
-export const getToken = (): string => {
-  return store.getters.token;
-};
-/**
- * @Author: xzh
- * @Descripttion:获取用户信息
- * @Param:
- */
-export const getUserInfo = () => {
-  return store.dispatch("user/getUserInfo");
-};
-/**
- * @Author: xzh
- * @Descripttion:退出登录
- * @Param:
- */
-export const login = (userInfo: user_Inf): void => {
-  store.dispatch("user/login", userInfo);
-};
-/**
- * @Author: xzh
- * @Descripttion:退出登录
- * @Param:
- */
-export const logout = (): void => {
-  store.dispatch("user/logout");
-};
+class storeAction_user {
+  /**
+   * @Author: xzh
+   * @Descripttion:当前用户信息
+   * @Param:
+   */
+  static currentUserInfo = (): user_Inf => store.getters.userInfo || {};
+  /**
+   * @Author: xzh
+   * @Descripttion:获取token
+   * @Param:
+   */
+  static getToken = (): string => store.getters.token;
+  /**
+   * @Author: xzh
+   * @Descripttion:获取用户信息
+   * @Param:
+   */
+  static getUserInfo = async () => {
+    return await store.dispatch("user/getUserInfo");
+  };
+  /**
+   * @Author: xzh
+   * @Descripttion:退出登录
+   * @Param:
+   */
+  static login = async (userInfo: user_Inf) => {
+    await store.dispatch("user/login", userInfo);
+  };
+  /**
+   * @Author: xzh
+   * @Descripttion:退出登录
+   * @Param:
+   */
+  static logout = async () => {
+    await store.dispatch("user/logout");
+  };
 
-/**
- * @Author: xzh
- * @Descripttion:清除token
- * @Param:
- */
-export const resetToken = (): void => {
-  store.dispatch("user/resetToken");
-};
+  /**
+   * @Author: xzh
+   * @Descripttion:清除token
+   * @Param:
+   */
+  static resetToken = (): void => {
+    store.dispatch("user/resetToken");
+  };
+}
+
+export default storeAction_user;

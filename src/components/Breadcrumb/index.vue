@@ -1,7 +1,7 @@
 <!--
- * @Descripttion: 
+ * @Descripttion: 面包屑
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 13:30:17
+ * @LastEditTime: 2021-07-31 17:44:33
 -->
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
@@ -20,14 +20,14 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { useRouter, RouteRecordRaw } from "vue-router";
-import store from "@/store";
+import storeAction_app from "@storeAction/app";
 export default defineComponent({
   name: "Breadcrumb",
   setup() {
     let router = useRouter();
     //获取当前语言字段
     let field = computed(() => {
-      return "title" + store.getters.language.suffix;
+      return "title" + storeAction_app.getLanguage().suffix;
     });
     let levelList = computed(
       (): Array<RouteRecordRaw> => {

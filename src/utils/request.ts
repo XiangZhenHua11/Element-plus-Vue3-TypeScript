@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ElMessage, ElMessageBox } from "element-plus";
-import store from "@/store";
+import storeAction_user from "@storeAction/app/user";
+import { getToken } from "@/utils/cache/cookies";
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -11,8 +12,8 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     config.headers["login-mark"] = "xzh";
-    if (store.getters.token) {
-      config.headers["token"] = store.getters.token;
+    if (!!getToken()) {
+      config.headers["token"] = getToken();
     }
     return config;
   },
@@ -49,9 +50,8 @@ service.interceptors.response.use(
             type: "warning",
           }
         ).then(() => {
-          store.dispatch("user/resetToken").then(() => {
-            location.reload();
-          });
+          storeAction_user.resetToken();
+          location.reload();
         });
       }
       return Promise.reject(new Error(res.message || "Error"));

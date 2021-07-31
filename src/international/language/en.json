@@ -11,10 +11,10 @@
   },
   "login": {
     "title": "system login",
-    "username": "account number",
     "password": "password",
     "loginOn": "log in",
-    "passwordRule_length": "The length is between 3 and 5 characters"
+    "passwordRule_length": "The length is between 3 and 5 characters",
+    "account": "account"
   },
   "systemFunction": {
     "name": "System functions",

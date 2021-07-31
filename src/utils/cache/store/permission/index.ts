@@ -1,14 +1,24 @@
 /*
- * @Descripttion:路由store操作类
+ * @Descripttion:路由store操作
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 17:01:04
+ * @LastEditTime: 2021-07-31 18:21:43
  */
 import store from "@/store";
 /**
  * @Author: xzh
- * @Descripttion:切换菜单收起/展开状态
+ * @Descripttion:路由store操作类
  * @Param:
  */
-export const generateRoutes = (account: string): any => {
-  return store.dispatch("permission/generateRoutes", account);
-};
+class storeAction_router {
+  /**
+   * @Author: xzh
+   * @Descripttion:获取菜单
+   * @Param:
+   * @param {string} account-账号
+   */
+  static generateRoutes = async (account: string) => {
+    return await store.dispatch("permission/generateRoutes", account);
+  };
+}
+
+export default storeAction_router;

@@ -1,5 +1,5 @@
 import router from "@/router";
-import { loadSideMenu } from "@/api/app/home";
+import api_home from "@/api/app/home";
 import Layout from "@/layout/index.vue";
 import { state_Inf, resData_Inf, routerMenu_Inf } from "./permission.d";
 /**
@@ -139,7 +139,7 @@ const actions = {
    */
   async generateRoutes({ commit }: any) {
     // 获取菜单数据,把数据添加到路由
-    const { data } = await loadSideMenu();
+    const { data } = await api_home.loadSideMenu();
     // 获取格式化后菜单数据
     var routMenu: Array<routerMenu_Inf> = generaMenu(data);
     commit("SET_ROUTES", routMenu);

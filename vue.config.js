@@ -1,3 +1,8 @@
+/*
+ * @Descripttion: 
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-07-30 10:14:38
+ */
 const port = process.env.port || process.env.npm_config_port || 9528; // dev port
 const path = require("path");
 module.exports = {
@@ -24,5 +29,11 @@ module.exports = {
       preProcessor: "scss",
       patterns: [path.resolve(__dirname, "src/styles/variables.scss")],
     },
+  },
+  chainWebpack: config => {
+    config.resolve.alias
+      .set('@', path.resolve(__dirname,'src'))
+      .set('@store', path.resolve(__dirname,'src/store/modules'))
+      .set('@storeAction', path.resolve(__dirname,'src/utils/cache/store'))
   },
 };

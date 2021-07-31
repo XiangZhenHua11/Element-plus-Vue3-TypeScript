@@ -1,19 +1,21 @@
 /*
- * @Descripttion:
+ * @Descripttion:用户store
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-05 11:51:32
+ * @LastEditTime: 2021-07-31 18:22:28
  */
 import router from "@/router/index";
 import { getToken, setToken, removeToken } from "@/utils/cache/cookies";
-import { login, logout, getUserInfo } from "@/api/app/users";
+import api_user from "@/api/app/users";
 import { userStroe_Inf, user_Inf } from "./user.d";
 
 const getDefaultState = (): userStroe_Inf => {
   return {
     token: getToken(),
     userInfo: {
-      name: "",
-      headImg: "",
+      userName: "", //用户名
+      headImg: "", //头像
+      account: "", //账号
+      password: "", //密码
     },
   };
 };
@@ -37,8 +39,7 @@ const actions = {
    * @Param:
    */
   async login({ commit }: any, userInfo: user_Inf) {
-    const { username, password } = userInfo;
-    const { data } = await login({ username, password });
+    const { data } = await api_user.login({ ...userInfo });
     commit("SET_TOKEN", data.token);
     setToken(data.token);
     return Promise.resolve(true);
@@ -51,7 +52,7 @@ const actions = {
    * @param {any} param1
    */
   async getUserInfo({ commit, state }: any) {
-    const { data } = await getUserInfo(state.token);
+    const { data } = await api_user.getUserInfo(state.token);
     const { userName, headImg } = data;
     commit("SET_USERINFO", {
       userName,
@@ -66,7 +67,7 @@ const actions = {
    * @param {any} param1
    */
   async logout({ commit, state }: any) {
-    await logout();
+    await api_user.logout();
     removeToken();
     commit("SET_TOKEN", "");
     router.push("/login");

@@ -1,14 +1,15 @@
 /*
  * @Descripttion:
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 15:20:41
+ * @LastEditTime: 2021-07-31 18:04:26
  */
-import { setSidebarStatus, getSidebarStatus } from "@/utils/cache/cookies";
+import storeAction_app from "@storeAction/app";
 import { app_Inf } from "./index.d";
 
 const state: app_Inf = {
   sidebar: {
-    opened: !!eval(<string>getSidebarStatus() || "true") ? true : false,
+    //false-展开/true-收起
+    opened: false,
   },
   language: {
     //当前语言
@@ -23,10 +24,10 @@ const mutations = {
    * @Descripttion:设置菜单收起/展开状态
    * @Param:
    * @param {app_Inf} state
+   * @param {boolean} opened-展开状态
    */
-  TOGGLE_SIDEBAR: (state: app_Inf) => {
-    state.sidebar.opened = !state.sidebar.opened;
-    setSidebarStatus(!!state.sidebar.opened ? "true" : "false");
+  TOGGLE_SIDEBAR: (state: app_Inf, opened: boolean) => {
+    state.sidebar.opened = !opened;
   },
   /**
    * @Author: xzh
@@ -48,7 +49,7 @@ const actions = {
    * @param {any} param1
    */
   toggleSideBar: ({ commit }: any) => {
-    commit("TOGGLE_SIDEBAR");
+    commit("TOGGLE_SIDEBAR", storeAction_app.getSidebar().opened);
   },
   /**
    * @Author: xzh

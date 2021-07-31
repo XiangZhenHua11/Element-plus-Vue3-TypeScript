@@ -1,7 +1,7 @@
 /*
  * @Descripttion:
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-05 11:50:14
+ * @LastEditTime: 2021-07-30 17:31:27
  */
 /**
  * @Author: xzh
@@ -18,8 +18,8 @@ export interface userStroe_Inf {
  * @Param:
  */
 export interface user_Inf {
-  name?: string; // 用户名
+  userName?: string; // 用户名
   headImg?: string; //头像
-  username?: string; //账号
+  account?: string; //账号
   password?: string; //密码
 }

@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-05 11:58:22
+ * @LastEditTime: 2021-07-31 17:46:02
 -->
 <template>
   <div :class="classObj" class="app-wrapper">
@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { AppMain, Sidebar, Navbar } from "./components";
-import { sidebar, toggleSideBar } from "@storeAction/app/index";
+import storeAction_app from "@storeAction/app";
 import { defineComponent, computed } from "vue";
 export default defineComponent({
   name: "Layout",
@@ -31,6 +31,8 @@ export default defineComponent({
     Navbar,
   },
   setup() {
+    //菜单栏状态
+    let sidebar = storeAction_app.getSidebar();
     /**
      * @Author: xzh
      * @Descripttion:获取不同模式状态
@@ -38,7 +40,7 @@ export default defineComponent({
      */
     let classObj = computed((): any => {
       return {
-        hideSidebar: !sidebar.opened,
+        hideSidebar: sidebar.opened,
         openSidebar: sidebar.opened,
         mobile: false,
       };
@@ -50,7 +52,7 @@ export default defineComponent({
      * @param {*} void
      */
     let handleClickOutside = (): void => {
-      toggleSideBar();
+      storeAction_app.toggleSideBar();
     };
     return {
       classObj,

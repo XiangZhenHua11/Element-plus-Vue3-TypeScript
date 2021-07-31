@@ -1,3 +1,8 @@
+<!--
+ * @Descripttion: 
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-07-31 17:47:25
+-->
 <template>
   <div class="login-container">
     <el-form
@@ -28,16 +33,16 @@
           </template>
         </el-dropdown>
       </div>
-      <el-form-item prop="username">
+      <el-form-item prop="account">
         <span class="svg-container">
           <i class="iconfont icon-account"></i>
         </span>
         <el-input
-          v-model="loginForm.username"
-          ref="username"
-          name="username"
+          v-model="loginForm.account"
+          ref="account"
+          name="account"
           autocomplete="on"
-          :placeholder="$t('login.username')"
+          :placeholder="$t('login.account')"
         ></el-input>
       </el-form-item>
       <el-form-item prop="password">
@@ -61,8 +66,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, reactive, watch, computed } from "vue";
-import { toggleLanguage } from "@storeAction/app/index";
-import { login } from "@storeAction/app/user";
+import storeAction_app from "@storeAction/app";
+import storeAction_user from "@storeAction/app/user";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 export default defineComponent({
@@ -76,7 +81,7 @@ export default defineComponent({
     let otherQuery = ref<any>({});
     let loginFormRef = ref<HTMLElement | null>(null);
     let loginForm = reactive({
-      username: "system",
+      account: "system",
       password: "wwww",
     });
     /**
@@ -87,10 +92,10 @@ export default defineComponent({
      */
     let loginRules = computed((): any => {
       return reactive({
-        username: [
+        account: [
           {
             required: true,
-            message: t("common.enter") + t("login.username"),
+            message: t("common.enter") + t("login.account"),
             trigger: "change",
           },
         ],
@@ -129,7 +134,7 @@ export default defineComponent({
 
     let changeLanguage = (item: string) => {
       I18n.locale.value = item;
-      toggleLanguage(item);
+      storeAction_app.toggleLanguage(item);
     };
     /**
      * @Author: xzh
@@ -172,7 +177,7 @@ export default defineComponent({
         if (valid) {
           try {
             loading.value = true;
-            await login(loginForm);
+            await storeAction_user.login(loginForm);
             router.push({
               path: redirect.value || "/",
               query: otherQuery.value,

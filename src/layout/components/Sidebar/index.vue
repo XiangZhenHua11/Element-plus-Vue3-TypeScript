@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 11:42:53
+ * @LastEditTime: 2021-07-31 18:01:48
 -->
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, computed } from "vue";
-import store from "@/store";
+import storeAction_app from "@storeAction/app";
 import { useRouter } from "vue-router";
 import variables from "@/styles/variables.scss";
 export default defineComponent({
@@ -47,10 +47,10 @@ export default defineComponent({
   setup() {
     let router = useRouter();
     //获取缓存菜单
-    let sidmenuArr = reactive(store.getters.sidmenuArr);
+    let sidmenuArr = reactive(storeAction_app.getSidmenuArr());
     //获取当前语言字段
     let field = computed(() => {
-      return "title" + store.getters.language.suffix;
+      return "title" + storeAction_app.getLanguage().suffix;
     });
     //scss变量
     let variableArr = reactive(variables);
@@ -72,7 +72,7 @@ export default defineComponent({
      * @Param:
      */
     let isCollapse = computed((): boolean => {
-      return !store.getters.sidebar.opened;
+      return storeAction_app.getSidebar().opened;
     });
     return {
       sidmenuArr,
