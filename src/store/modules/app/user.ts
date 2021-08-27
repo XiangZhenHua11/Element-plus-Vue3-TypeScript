@@ -1,7 +1,7 @@
 /*
  * @Descripttion:用户store
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-31 18:22:28
+ * @LastEditTime: 2021-07-31 18:29:41
  */
 import router from "@/router/index";
 import { getToken, setToken, removeToken } from "@/utils/cache/cookies";
@@ -25,7 +25,7 @@ const mutations = {
   SET_TOKEN: (state: userStroe_Inf, token: string) => {
     state.token = token;
   },
-  SET_USERINFO: (state: userStroe_Inf, userInfo: any) => {
+  SET_USERINFO: (state: userStroe_Inf, userInfo: user_Inf) => {
     Object.assign(state.userInfo, userInfo);
   },
   RESET_STATE: (state: userStroe_Inf) => {
