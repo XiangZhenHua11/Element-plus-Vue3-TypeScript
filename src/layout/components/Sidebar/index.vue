@@ -1,7 +1,7 @@
 <!--
- * @Descripttion: 
+ * @Descripttion: 菜单
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-31 18:01:48
+ * @LastEditTime: 2021-09-01 10:19:02
 -->
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
@@ -13,37 +13,27 @@
       :active-text-color="variableArr.menuActiveText"
       :background-color="variableArr.menuBg"
     >
-      <el-submenu
-        v-for="rootMenu in sidmenuArr"
-        :key="rootMenu.path"
-        :index="rootMenu.path"
-      >
-        <template #title>
-          <i :class="[rootMenu.meta.icon, 'span-icon']"></i>
-          <span v-if="!!rootMenu.meta">{{ rootMenu.meta[field] }}</span>
-        </template>
-        <el-menu-item
-          v-for="childMenu in rootMenu.children"
-          :key="childMenu.path"
-          :index="childMenu.path"
-        >
-          <template #title>
-            <i :class="[childMenu.meta.icon, 'span-icon']"></i>
-            <span v-if="!!childMenu.meta">{{ childMenu.meta[field] }}</span>
-          </template>
-        </el-menu-item>
-      </el-submenu>
+      <menuItem
+        v-for="item in sidmenuArr"
+        :key="item.path"
+        :menuItem="item"
+      ></menuItem>
     </el-menu>
   </el-scrollbar>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, computed } from "vue";
-import storeAction_app from "@storeAction/app";
 import { useRouter } from "vue-router";
+import storeAction_app from "@storeAction/app";
 import variables from "@/styles/variables.scss";
+import menuItem from "./SideBarItem/index.vue";
+
 export default defineComponent({
   name: "SideBar",
+  components: {
+    menuItem,
+  },
   setup() {
     let router = useRouter();
     //获取缓存菜单
@@ -84,11 +74,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.span-icon {
-  vertical-align: middle;
-  width: 30px;
-  display: inline-block;
-}
-</style>
