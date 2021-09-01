@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 菜单item
  * @LastEditors: xzh
- * @LastEditTime: 2021-09-01 10:20:42
+ * @LastEditTime: 2021-09-01 10:21:56
 -->
 <template>
   <el-menu-item
@@ -41,7 +41,11 @@ export default defineComponent({
   },
   setup(props) {
     let menuItem = reactive<any>(props.menuItem);
-    //获取当前语言字段
+    /**
+     * @Author: xzh
+     * @Descripttion:获取当前语言字段
+     * @Param:
+     */
     let field = computed(() => {
       return "title" + storeAction_app.getLanguage().suffix;
     });

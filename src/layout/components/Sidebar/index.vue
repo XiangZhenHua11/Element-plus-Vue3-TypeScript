@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 菜单
  * @LastEditors: xzh
- * @LastEditTime: 2021-09-01 10:19:02
+ * @LastEditTime: 2021-09-01 10:32:31
 -->
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
@@ -38,7 +38,11 @@ export default defineComponent({
     let router = useRouter();
     //获取缓存菜单
     let sidmenuArr = reactive(storeAction_app.getSidmenuArr());
-    //获取当前语言字段
+    /**
+     * @Author: xzh
+     * @Descripttion:获取当前语言字段
+     * @Param:
+     */
     let field = computed(() => {
       return "title" + storeAction_app.getLanguage().suffix;
     });
