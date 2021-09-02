@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 菜单
  * @LastEditors: xzh
- * @LastEditTime: 2021-09-01 10:32:31
+ * @LastEditTime: 2021-09-02 09:21:21
 -->
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
@@ -14,7 +14,7 @@
       :background-color="variableArr.menuBg"
     >
       <menuItem
-        v-for="item in sidmenuArr"
+        v-for="item in routeMenuArr"
         :key="item.path"
         :menuItem="item"
       ></menuItem>
@@ -37,7 +37,7 @@ export default defineComponent({
   setup() {
     let router = useRouter();
     //获取缓存菜单
-    let sidmenuArr = reactive(storeAction_app.getSidmenuArr());
+    let routeMenuArr = reactive(storeAction_app.getRouteMenuArr());
     /**
      * @Author: xzh
      * @Descripttion:获取当前语言字段
@@ -69,7 +69,7 @@ export default defineComponent({
       return storeAction_app.getSidebar().opened;
     });
     return {
-      sidmenuArr,
+      routeMenuArr,
       isCollapse,
       activeMenu,
       variableArr,

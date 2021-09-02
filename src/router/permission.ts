@@ -1,7 +1,7 @@
 /*
  * @Descripttion:
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-31 17:44:59
+ * @LastEditTime: 2021-09-02 10:44:06
  */
 import router from "@/router";
 import NProgress from "nprogress";
@@ -27,9 +27,8 @@ router.beforeEach(async (to: any, _: any, next: any) => {
       next({ path: "/" });
       NProgress.done();
     } else {
-      const hasGetUserInfo = (storeAction_user.currentUserInfo() || {})
-        .userName;
-      if (hasGetUserInfo) {
+      let hasGetUserInfo = storeAction_user.currentUserInfo()!.userName;
+      if (!!hasGetUserInfo && !!to.name) {
         next();
       } else {
         try {
@@ -37,7 +36,9 @@ router.beforeEach(async (to: any, _: any, next: any) => {
           const { account } = await storeAction_user.getUserInfo();
 
           // 基于角色生成可访问路由图
-          const accessRoutes = await storeAction_router.generateRoutes(account);
+          const accessRoutes = <any>(
+            await storeAction_router.generateRoutes(account || "")
+          );
           accessRoutes.forEach((item: RouteRecordRaw) => {
             // 动态添加可访问路由
             router.addRoute(item);

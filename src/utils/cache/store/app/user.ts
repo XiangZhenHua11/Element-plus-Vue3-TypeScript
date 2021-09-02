@@ -1,7 +1,7 @@
 /*
  * @Descripttion:用户store统一操作
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-31 18:20:33
+ * @LastEditTime: 2021-09-02 10:48:13
  */
 import store from "@/store";
 import { user_Inf } from "@/store/modules/app/user.d";
@@ -29,7 +29,11 @@ class storeAction_user {
    * @Param:
    */
   static getUserInfo = async () => {
-    return await store.dispatch("user/getUserInfo");
+    let userInfo: user_Inf = store.getters.userInfo || {};
+    if (!userInfo!.account) {
+      userInfo = await store.dispatch("user/getUserInfo");
+    }
+    return userInfo;
   };
   /**
    * @Author: xzh

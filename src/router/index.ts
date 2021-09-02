@@ -1,3 +1,8 @@
+/*
+ * @Descripttion:
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-09-01 20:01:53
+ */
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Layout from "@/layout/index.vue";
 
@@ -19,6 +24,7 @@ const constantRoutes: Array<RouteRecordRaw> = [
   {
     path: "/",
     component: Layout,
+    name: "homePage",
     redirect: "/homePage",
   },
 ];

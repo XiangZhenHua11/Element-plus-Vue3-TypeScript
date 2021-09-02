@@ -1,10 +1,9 @@
 /*
  * @Descripttion:
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-30 10:22:58
+ * @LastEditTime: 2021-09-02 10:30:57
  */
 import { createStore } from "vuex";
-import Cookies from "js-cookie";
 import user from "./modules/app/user";
 import app from "./modules/app";
 import permission from "./modules/router/permission";
@@ -21,11 +20,6 @@ export const store = createStore({
   plugins: [
     createPersistedState({
       storage: window.sessionStorage,
-      // storage: {
-      //   getItem: (key) => Cookies.get(key),
-      //   setItem: (key, value) => Cookies.set(key, value, { expires: 1 }),
-      //   removeItem: (key) => Cookies.remove(key),
-      // },
     }),
   ],
 });

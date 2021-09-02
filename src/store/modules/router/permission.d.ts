@@ -1,11 +1,10 @@
 /*
  * @Descripttion:路由接口
  * @LastEditors: xzh
- * @LastEditTime: 2021-06-24 16:59:38
+ * @LastEditTime: 2021-09-02 10:29:17
  */
 export interface state_Inf {
-  routes: Array<any>;
-  addRoutes: Array<any>;
+  routeMenuArr: Array<routerMenu_Inf>;
   sidmenuArr: Array<resData_Inf>;
 }
 /**

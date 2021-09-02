@@ -1,7 +1,7 @@
 /*
  * @Descripttion:app store统一操作
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-31 18:21:12
+ * @LastEditTime: 2021-09-02 10:30:13
  */
 import store from "@/store";
 import { sidebar_Inf, language_Inf } from "@store/app/index.d";
@@ -22,7 +22,8 @@ class storeAction_app {
    * @Descripttion:首页菜单
    * @Param:
    */
-  static getSidmenuArr = (): Array<object> => store.getters.sidmenuArr || [];
+  static getRouteMenuArr = (): Array<object> =>
+    store.getters.routeMenuArr || [];
   /**
    * @Author: xzh
    * @Descripttion:语言

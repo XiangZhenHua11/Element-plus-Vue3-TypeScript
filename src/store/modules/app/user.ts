@@ -1,7 +1,7 @@
 /*
  * @Descripttion:用户store
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-31 18:29:41
+ * @LastEditTime: 2021-09-02 10:47:44
  */
 import router from "@/router/index";
 import { getToken, setToken, removeToken } from "@/utils/cache/cookies";
@@ -15,7 +15,6 @@ const getDefaultState = (): userStroe_Inf => {
       userName: "", //用户名
       headImg: "", //头像
       account: "", //账号
-      password: "", //密码
     },
   };
 };
@@ -53,10 +52,11 @@ const actions = {
    */
   async getUserInfo({ commit, state }: any) {
     const { data } = await api_user.getUserInfo(state.token);
-    const { userName, headImg } = data;
+    const { userName, headImg, account } = data;
     commit("SET_USERINFO", {
       userName,
       headImg,
+      account,
     });
     return Promise.resolve(data);
   },
