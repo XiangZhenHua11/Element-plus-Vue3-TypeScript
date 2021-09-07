@@ -1,7 +1,7 @@
 /*
- * @Descripttion: 
+ * @Descripttion:
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-30 10:14:38
+ * @LastEditTime: 2021-09-07 20:12:38
  */
 const port = process.env.port || process.env.npm_config_port || 9528; // dev port
 const path = require("path");
@@ -16,7 +16,7 @@ module.exports = {
     },
     proxy: {
       "/api": {
-        target: "http://localhost:8089/api/",
+        target: "http://localhost:8099/api/",
         changeOrigin: true,
         pathRewrite: {
           "^/api": "",
@@ -30,10 +30,10 @@ module.exports = {
       patterns: [path.resolve(__dirname, "src/styles/variables.scss")],
     },
   },
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     config.resolve.alias
-      .set('@', path.resolve(__dirname,'src'))
-      .set('@store', path.resolve(__dirname,'src/store/modules'))
-      .set('@storeAction', path.resolve(__dirname,'src/utils/cache/store'))
+      .set("@", path.resolve(__dirname, "src"))
+      .set("@store", path.resolve(__dirname, "src/store/modules"))
+      .set("@storeAction", path.resolve(__dirname, "src/utils/cache/store"));
   },
 };

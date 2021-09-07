@@ -1,7 +1,7 @@
 /*
  * @Descripttion:app store统一操作
  * @LastEditors: xzh
- * @LastEditTime: 2021-09-02 10:30:13
+ * @LastEditTime: 2021-09-04 11:55:13
  */
 import store from "@/store";
 import { sidebar_Inf, language_Inf } from "@store/app/index.d";
