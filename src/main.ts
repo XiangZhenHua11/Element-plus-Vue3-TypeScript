@@ -1,3 +1,8 @@
+/*
+ * @Descripttion:
+ * @LastEditors: xzh
+ * @LastEditTime: 2021-09-15 17:53:54
+ */
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
@@ -18,6 +23,10 @@ import "element-plus/lib/theme-chalk/index.css";
 
 //引入i18n，国际化语言包
 import i18n from "@/international/i18n";
+
+import login from "@/views/login/index.vue";
+
+export default login;
 
 createApp(App)
   .use(store)

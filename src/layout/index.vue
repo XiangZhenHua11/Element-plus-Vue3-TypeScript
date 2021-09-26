@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-31 17:46:02
+ * @LastEditTime: 2021-09-07 20:34:13
 -->
 <template>
   <div :class="classObj" class="app-wrapper">
@@ -11,24 +11,28 @@
       class="drawer-bg"
       @click="handleClickOutside"
     />
-    <sidebar class="sidebar-container" />
+    <SideBar class="sidebar-container" />
     <div class="main-container">
-      <navbar />
+      <!-- 工具栏 -->
+      <NavBar />
+      <!-- 选项卡 -->
+      <TabBar />
       <app-main />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { AppMain, Sidebar, Navbar } from "./components";
+import { AppMain, SideBar, NavBar, TabBar } from "./components";
 import storeAction_app from "@storeAction/app";
 import { defineComponent, computed } from "vue";
 export default defineComponent({
   name: "Layout",
   components: {
-    Sidebar,
+    SideBar,
     AppMain,
-    Navbar,
+    NavBar,
+    TabBar,
   },
   setup() {
     //菜单栏状态

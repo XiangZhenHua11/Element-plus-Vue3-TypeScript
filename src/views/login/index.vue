@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 
  * @LastEditors: xzh
- * @LastEditTime: 2021-07-31 17:47:25
+ * @LastEditTime: 2021-09-26 09:24:41
 -->
 <template>
   <div class="login-container">
@@ -82,7 +82,7 @@ export default defineComponent({
     let loginFormRef = ref<HTMLElement | null>(null);
     let loginForm = reactive({
       account: "system",
-      password: "wwww",
+      password: "www",
     });
     /**
      * @Author: xzh
