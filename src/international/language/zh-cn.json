@@ -33,5 +33,8 @@
   },
   "navbar": {
     "logout": "退出登录"
+  },
+  "routerMenuArr": {
+    "console": "控制台"
   }
 }
